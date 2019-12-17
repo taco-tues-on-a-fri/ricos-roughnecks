@@ -1,0 +1,20 @@
+{
+  "name": "ricos-roughnecks",
+  "version": "1.0.0",
+  "description": "React Bug Tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taco-tues-on-a-fri/ricos-roughnecks.git"
+  },
+  "keywords": [],
+  "author": "taco-tues-on-a-fri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taco-tues-on-a-fri/ricos-roughnecks/issues"
+  },
+  "homepage": "https://github.com/taco-tues-on-a-fri/ricos-roughnecks#readme"
+}
