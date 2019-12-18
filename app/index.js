@@ -7,7 +7,7 @@ import './index.css'
 class App extends React.Component {
   render() {
     return (
-      <Container maxWidth="sm">
+      <Container>
         <StickyHeadTable />
       </Container>
     )
