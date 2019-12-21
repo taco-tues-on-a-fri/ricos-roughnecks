@@ -1,0 +1,36 @@
+# Custom
+*.code-workspace
+dist/
+.DS_Store
+*.env
+env.js
+*.log
+backup.*
+backup/
+idea.*
+idea/
+ignore/
+logs/
+merge.*
+merge/
+notes.*
+notes/
+template.*
+templates/
+.vscode/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Node.js Tools for Visual Studio
+.ntvs_analysis.dat
+node_modules/
