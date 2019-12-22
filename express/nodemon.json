@@ -1,7 +1,5 @@
 {
-  "watch": [
-    "src",
-    ".env"
-  ],
-  "ext": "js,ts,json"
+  "exec": "npm run dev",
+  "watch": ["src/*", "public/*"],
+  "ext": "js, html, css, json"
 }
