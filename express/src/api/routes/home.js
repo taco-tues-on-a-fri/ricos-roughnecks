@@ -15,13 +15,6 @@ export default (app: Router) => {
 
   route.post(
     '/home',
-    celebrate({
-      body: Joi.object({
-        name: Joi.string().required(),
-        email: Joi.string().required(),
-        password: Joi.string().required(),
-      }),
-    }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger = Container.get('logger');
       logger.debug('Calling home endpoint with body: %o', req.body )
