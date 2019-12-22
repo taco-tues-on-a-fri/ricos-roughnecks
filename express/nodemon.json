@@ -3,5 +3,5 @@
     "src",
     ".env"
   ],
-  "ext": "js,ts,json",
+  "ext": "js,ts,json"
 }
