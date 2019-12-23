@@ -2,7 +2,7 @@
 //|------------------------------------------------------------------------
 //| 12-22-19: Testing a basic implementation of the boilerplate example.
 
-import { Router, Request, Response, NextFunction } from 'express';
+import { App, Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 // import { IUserInputDTO } from '../../interfaces/IUser';
 // import middlewares from '../middlewares';
@@ -10,12 +10,12 @@ import { Container } from 'typedi';
 
 const route = Router();
 
-export default (app: Router) => {
+export default ({app, Router}) => {
   app.use('/', route);
 
   route.post(
     '/home',
-    async (req: Request, res: Response, next: NextFunction) => {
+    async ({req: Request, res: Response, next: NextFunction}) => {
       const logger = Container.get('logger');
       logger.debug('Calling home endpoint with body: %o', req.body )
       try {
