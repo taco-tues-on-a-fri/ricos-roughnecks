@@ -4,6 +4,8 @@
 //| 12-22-19: File is back to working state.
 //| 12-22-19: morgan w/ winston logging is complete
 //| 12-23-19: changing server port to 9000
+//| 12-23-19: TODO: need to change express.static to handle the dist folder
+//| 12-23-19: TODO:     how are .env variables handled?
 
 
 
@@ -28,7 +30,8 @@ import { pool } from './config/index'
 
 //| setup routes
 //|------------------------------------------------------------------------
-import router from './routes/index'
+import index_router from './routes/index'
+import api_router from './routes/api'
 
 //| instantiate express
 //|------------------------------------------------------------------------
@@ -67,7 +70,8 @@ app.use(limiter)
 
 //| define routes
 //|------------------------------------------------------------------------
-app.use('/', router);
+app.use('/', index_router);
+app.use('/api', api_router);
 
 app.get('/status', (req, res) => {
   res.status(200).end()
