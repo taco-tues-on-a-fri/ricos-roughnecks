@@ -5,26 +5,44 @@
 
 
 import dotenv from 'dotenv';
+const { Pool } = require('pg')
+
 
 //| Set NODE_ENV to 'development' by default
 //|------------------------------------------------------------------------
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+const isProduction = process.env.NODE_ENV === 'production'
+
+
 
 const envFound = dotenv.config();
 if (!envFound) {
   // This error should crash whole process
-
   throw new Error("‼️ .env file not found ‼️"); 
 }
 
-export default {
-  port: parseInt(process.env.PORT, 2026),
+const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
+
+const pool = new Pool({
+  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+  ssl: isProduction,
+})
+module.exports = { pool }
+// export default {
+//   port: parseInt(process.env.PORT, 2026),
   
-  //TODO databaseURL: process.env.MONGODB_URI,
+//   // databaseURL: process.env.MONGODB_URI,
+//   pool: pool,
+
+//   jwtSecret: process.env.JWT_SECRET,
   
-  jwtSecret: process.env.JWT_SECRET,
-  
-  logs: {
-    level: process.env.LOG_LEVEL || 'silly',
-  }
-};
+//   logs: {
+//     level: process.env.LOG_LEVEL || 'silly',
+//   }
+// };
+
+
+
+
+
+// module.exports = { pool }
