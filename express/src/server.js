@@ -6,6 +6,7 @@
 //| 12-23-19: changing server port to 9000
 //| 12-23-19: TODO: need to change express.static to handle the dist folder
 //| 12-23-19: TODO:     how are .env variables handled?
+//| 12-23-19: TODO: dist build fails from erroneously included idea files.
 
 
 
