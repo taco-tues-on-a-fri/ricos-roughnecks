@@ -5,9 +5,7 @@ import home from './routes/home';
 
 export default () => {
   const app = Router();
-  index(app);
-	auth(app);
-	user(app);
+  home(app);
 
 	return app
 }
