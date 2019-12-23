@@ -12,16 +12,29 @@ import cors from 'cors';
 import Logger from './loaders/logger';
 // import cookieParser from 'cookie-parser';
 
+
+//| setup postgres
+//|------------------------------------------------------------------------
 import { pool } from './config/index'
 
 
+//| setup routes
+//|------------------------------------------------------------------------
 import router from './routes/index'
-// import indexRouter from './routes/index';
 
 
 const app = express();
 
-app.use(morgan('dev'));
+
+//| setup morgan w/ winston logging
+//|------------------------------------------------------------------------
+app.use(morgan('dev', { 
+  stream: {
+    write: (message) => Logger.info(message)
+  }
+}));
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
@@ -36,7 +49,8 @@ app.head('/status', (req, res) => {
   res.status(200).end()
 })
 
-  //| Catch 404 and forward to error handler
+
+//| Catch 404 and forward to error handler
 //|------------------------------------------------------------------------
 
 //| Catch 404
@@ -59,7 +73,7 @@ app.use((err, req, res, next) => {
 
 app.use((err, req, res, next) => {
 
-  //| include winston logging
+//| include winston logging
   Logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
   Logger.error(`${err.stack === undefined ? '' : err.stack}`);
 
