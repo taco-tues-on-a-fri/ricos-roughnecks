@@ -5,7 +5,7 @@
 
 
 import dotenv from 'dotenv';
-const { Pool } = require('pg')
+import { Pool } from 'pg';
 
 
 //| Set NODE_ENV to 'development' by default
