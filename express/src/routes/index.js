@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 var router = Router();
-import { pool } from '../config/index'
+// import { pool } from '../config/index'
+import { pool } from '../loaders/db'
 console.log(pool)
 
 /* GET home page. */
