@@ -2,6 +2,9 @@
 //|------------------------------------------------------------------------
 //| 12-22-19: Reverting back to normal express structure
 //| 12-22-19: File is back to working state.
+//| 12-22-19: morgan w/ winston logging is complete
+//| 12-23-19: changing server port to 9000
+
 
 
 import express from 'express';
@@ -22,7 +25,8 @@ import { pool } from './config/index'
 //|------------------------------------------------------------------------
 import router from './routes/index'
 
-
+//| instantiate express
+//|------------------------------------------------------------------------
 const app = express();
 
 
@@ -35,11 +39,17 @@ app.use(morgan('dev', {
 }));
 
 
+//| define middleware
+//|------------------------------------------------------------------------
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
+
+
+//| define routes
+//|------------------------------------------------------------------------
 app.use('/', router);
 
 app.get('/status', (req, res) => {
@@ -50,17 +60,18 @@ app.head('/status', (req, res) => {
 })
 
 
-//| Catch 404 and forward to error handler
+
+//| catch 404 and forward to error handler
 //|------------------------------------------------------------------------
 
-//| Catch 404
+//| catch 404
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err['status'] = 404;
   next(err);
 });
 
-//| Handle 401 thrown by express-jwt library
+//| handle 401 thrown by express-jwt library
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
     return res
@@ -71,9 +82,10 @@ app.use((err, req, res, next) => {
   return next(err);
 });
 
+//| handle all other errors
 app.use((err, req, res, next) => {
 
-//| include winston logging
+  //| include winston logging
   Logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
   Logger.error(`${err.stack === undefined ? '' : err.stack}`);
 
@@ -84,9 +96,6 @@ app.use((err, req, res, next) => {
     },
   });
 });
-
-
-
 
 export default app;
 
