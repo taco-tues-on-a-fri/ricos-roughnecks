@@ -7,6 +7,7 @@
 import dotenv from 'dotenv';
 import http from 'http'
 
+
 //| Set NODE_ENV to 'development' by default
 //|------------------------------------------------------------------------
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -18,11 +19,11 @@ if (!envFound) {
   throw new Error("‼️ .env file not found ‼️"); 
 }
 
+
 export default {
   // api: {
   //   prefix: '/api',
   // },
-  
   port: process.env.PORT || '9000',
 
   
