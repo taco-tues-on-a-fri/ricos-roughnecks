@@ -1,18 +1,22 @@
 import { Router, Request, Response, NextFunction } from 'express';
-var router = Router();
-// import { pool } from '../config/index'
-import { pool } from '../loaders/db'
-console.log(pool)
+const router = Router();
 
-/* GET home page. */
-router.get('/home', function(req, res, next) {
-  pool.query('SELECT * FROM person', (error, results) => {
-    if (error) {
-      throw error
-    }
-    res.status(200).json(results.rows)
-  })
-});
+import { pool } from '../loaders/db'
+import { index } from '../controllers/index_controller'
+
+// GET | index
+//|------------------------------------------------------------------------
+router.get('/home', index);
+
+
+// router.get('/home', function(req, res, next) {
+//   pool.query('SELECT * FROM person', (error, results) => {
+//     if (error) {
+//       throw error
+//     }
+//     res.status(200).json(results.rows)
+//   })
+// });
 
 
 export default router;
