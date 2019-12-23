@@ -4,14 +4,14 @@
   "description": "React Bug Tracker Backend",
   "author": "taco-tues-on-a-fri",
   "license": "ISC",
-  "main": "src/app.js",
+  "main": "src/server.js",
   "engines": {
     "node": "11.x"
   },
   "scripts": {
     "start": "npm run prod",
-    "server": "babel-node ./src/app.js",
-    "server:prod": "node ./dist/app.js",
+    "server": "babel-node ./src/bin/www",
+    "server:prod": "node ./dist/bin/www",
     "dev": "NODE_ENV=development npm-run-all server",
     "clean": "rimraf dist",
     "build": "babel ./src --out-dir dist",
