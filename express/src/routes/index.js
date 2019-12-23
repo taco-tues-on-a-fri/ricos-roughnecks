@@ -1,13 +1,17 @@
-import { Router, Request, Response, NextFunction } from 'express';
-const router = Router();
+// import { Router, Request, Response, NextFunction, redirect } from 'express';
+import express from 'express';
+const router = express.Router();
 
 import { pool } from '../loaders/db'
 import { index } from '../controllers/index_controller'
 
 // GET | index
 //|------------------------------------------------------------------------
-router.get('/home', index);
-
+// router.get('/home', index);
+router.get('/', function(req, res, next) {
+  console.log(req.body)
+  res.redirect('/api');
+});
 
 // router.get('/home', function(req, res, next) {
 //   pool.query('SELECT * FROM person', (error, results) => {
