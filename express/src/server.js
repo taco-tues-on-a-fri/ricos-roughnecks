@@ -13,6 +13,11 @@ import createError from 'http-errors'
 import morgan from 'morgan';
 import cors from 'cors';
 import Logger from './loaders/logger';
+import helmet from 'helmet'
+import compression from 'compression'
+import rateLimit from 'express-rate-limit'
+import { body, check } from 'express-validator'
+import util from 'util'
 // import cookieParser from 'cookie-parser';
 
 
@@ -30,6 +35,7 @@ import router from './routes/index'
 const app = express();
 
 
+
 //| setup morgan w/ winston logging
 //|------------------------------------------------------------------------
 app.use(morgan('dev', { 
@@ -43,9 +49,20 @@ app.use(morgan('dev', {
 //|------------------------------------------------------------------------
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors()) //TODO configure for production - see area at bottom
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
+app.use(compression())
+app.use(helmet())
+
+
+//| setup rate limiter
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 5, // 5 requests,
+})
+
+app.use(limiter)
 
 
 //| define routes
@@ -99,4 +116,16 @@ app.use((err, req, res, next) => {
 
 export default app;
 
+//| TODO Area
+//|------------------------------------------------------------------------
+//| integrate this cors configuration for production
 
+// const isProduction = process.env.NODE_ENV === 'production'
+// const origin = {
+//   origin: isProduction ? 'https://www.example.com' : '*',
+// }
+
+// app.use(cors(origin))
+
+//| 
+//|------------------------------------------------------------------------
