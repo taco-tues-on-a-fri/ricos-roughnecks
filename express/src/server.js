@@ -55,7 +55,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors()) //TODO configure for production - see area at bottom
 // app.use(cookieParser());
-app.use(express.static(path.join(__dirname, './public')));
+// app.use(express.static(path.join(__dirname, './public')));
 app.use(compression())
 app.use(helmet())
 
