@@ -8,8 +8,17 @@
 //|------------------------------------------------------------------------
 import config from './config'
 import express from 'express'
+import chalk from 'chalk'
+
 import Logger from './loaders/logger'
 // import 'reflect-metadata'; // We need this in order to use @Decorators
+
+//| TODO: integrate or delete
+//|------------------------------------------------------------------------
+// import debugLib from 'debug'
+// const debug =  debugLib('ricos-roughnecks-api:server');
+import http from 'http'
+//|------------------------------------------------------------------------
 
 
 async function startServer() {
