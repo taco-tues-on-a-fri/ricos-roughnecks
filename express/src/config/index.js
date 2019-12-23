@@ -18,14 +18,14 @@ if (!envFound) {
   throw new Error("‼️ .env file not found ‼️"); 
 }
 
-const port = process.env.PORT || '2026'
+// const port = process.env.PORT || '9000'
 
 export default {
   // api: {
   //   prefix: '/api',
   // },
   
-  // port: process.env.PORT || '2026',
+  port: process.env.PORT || '9000',
   
   // database: {
   //   isProduction: isProduction,
