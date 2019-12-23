@@ -3,6 +3,7 @@
 //| 12-22-19: attempting to create a standalone db loader
 //| 12-22-19: successfully created basic connection to db
 //| 12-22-19: TODO: Add db connection console.log
+//| 12-22-19: TODO: finish configuring and implement exports
 
 
 
@@ -22,3 +23,4 @@ const pool = new Pool({
 
 
 module.exports = { pool }
+// export default pool 
