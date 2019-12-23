@@ -21,20 +21,20 @@ if (!envFound) {
 const port = process.env.PORT || '2026'
 
 export default {
-  api: {
-    prefix: '/api',
-  },
+  // api: {
+  //   prefix: '/api',
+  // },
   
-  port: process.env.PORT || '2026',
+  // port: process.env.PORT || '2026',
   
-  database: {
-    isProduction: isProduction,
-    DB_USER: process.env.DB_USER,
-    DB_PASSWORD: process.env.DB_PASSWORD,
-    DB_HOST: process.env.DB_HOST,
-    DB_PORT: process.env.DB_PORT,
-    DB_DATABASE: process.env.DB_DATABASE
-  },
+  // database: {
+  //   isProduction: isProduction,
+  //   DB_USER: process.env.DB_USER,
+  //   DB_PASSWORD: process.env.DB_PASSWORD,
+  //   DB_HOST: process.env.DB_HOST,
+  //   DB_PORT: process.env.DB_PORT,
+  //   DB_DATABASE: process.env.DB_DATABASE
+  // },
   
 
   jwtSecret: process.env.JWT_SECRET,
