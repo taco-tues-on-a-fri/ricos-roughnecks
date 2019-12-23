@@ -5,15 +5,12 @@
 
 
 import dotenv from 'dotenv';
-import { Pool } from 'pg';
-
+import http from 'http'
 
 //| Set NODE_ENV to 'development' by default
 //|------------------------------------------------------------------------
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 const isProduction = process.env.NODE_ENV === 'production'
-
-
 
 const envFound = dotenv.config();
 if (!envFound) {
@@ -21,25 +18,31 @@ if (!envFound) {
   throw new Error("‼️ .env file not found ‼️"); 
 }
 
-const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
+const port = process.env.PORT || '2026'
 
-const pool = new Pool({
-  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-  ssl: isProduction,
-})
-module.exports = { pool }
-// export default {
-//   port: parseInt(process.env.PORT, 2026),
+export default {
+  api: {
+    prefix: '/api',
+  },
   
-//   // databaseURL: process.env.MONGODB_URI,
-//   pool: pool,
+  port: process.env.PORT || '2026',
+  
+  database: {
+    isProduction: isProduction,
+    DB_USER: process.env.DB_USER,
+    DB_PASSWORD: process.env.DB_PASSWORD,
+    DB_HOST: process.env.DB_HOST,
+    DB_PORT: process.env.DB_PORT,
+    DB_DATABASE: process.env.DB_DATABASE
+  },
+  
 
-//   jwtSecret: process.env.JWT_SECRET,
+  jwtSecret: process.env.JWT_SECRET,
   
-//   logs: {
-//     level: process.env.LOG_LEVEL || 'silly',
-//   }
-// };
+  logs: {
+    level: process.env.LOG_LEVEL || 'silly',
+  }
+};
 
 
 
