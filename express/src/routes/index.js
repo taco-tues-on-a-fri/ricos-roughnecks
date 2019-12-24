@@ -1,6 +1,5 @@
-// import { Router, Request, Response, NextFunction, redirect } from 'express';
-import express from 'express';
-const router = express.Router();
+import { Router, Request, Response, NextFunction } from 'express';
+const router = Router();
 
 import { pool } from '../loaders/db'
 import { index } from '../controllers/index_controller'
@@ -9,7 +8,6 @@ import { index } from '../controllers/index_controller'
 //|------------------------------------------------------------------------
 // router.get('/home', index);
 router.get('/', function(req, res, next) {
-  console.log(req.body)
   res.redirect('/api');
 });
 
