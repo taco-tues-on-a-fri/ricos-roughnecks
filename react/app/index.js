@@ -15,6 +15,7 @@ class App extends React.Component {
   callAPI() {
     fetch("http://localhost:9000/api/ticket")
       .then(res => res.text())
+      // .then(res => res.JSON())
       .then(res => this.setState({ apiResponse: res }))
       .catch(err => err);
   }
@@ -24,9 +25,9 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div>
-        <p>{this.state.apiResponse}</p>
-      </div>
+      <Container>
+        <StickyHeadTable />
+      </Container>
     )
   }
 }
@@ -39,3 +40,7 @@ ReactDom.render(
 // <Container>
 //         <StickyHeadTable />
 //       </Container>
+
+{/* <div>
+        <p>{this.state.apiResponse}</p>
+      </div> */}
