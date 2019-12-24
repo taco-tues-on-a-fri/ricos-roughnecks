@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getQuery, fetchPopularRepos } from '../../../utils/api'
+import { getQuery, fetchQuery } from '../../../utils/api'
 import { FaUser, FaStar, FaCodeBranch, FaExclamationTriangle } from 'react-icons/fa'
 import Card from '../Card'
 
@@ -70,6 +70,47 @@ function ReposGrid ({ repos }) {
   )
 }
 
+function ticketTable ({ columns }) {
+  return (
+    <ul className='grid space-around'>
+      {columns.map((column, index) => {
+        const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
+
+
+        return (
+          <li key={ticket_id}>
+            <Card
+              header={`#${index + 1}`}
+              name={ticket_name}
+            >
+              <ul className='card-list'>
+                <li>
+                  <FaUser color='rgb(255, 191, 116)' size={22} />
+                  <a>
+                    {ticket_name}
+                  </a>
+                </li>
+                <li>
+                  <FaStar color='rgb(255, 215, 0)' size={22} />
+                  {ticket_status}
+                </li>
+                <li>
+                  <FaCodeBranch color='rgb(129, 195, 245)' size={22} />
+                  {ticket_description}
+                </li>
+                <li>
+                  <FaExclamationTriangle color='rgb(241, 138, 147)' size={22} />
+                  {ticket_priority} 
+                </li>
+              </ul>
+            </Card>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 export default class ApiResponse extends React.Component {
   state = {
     selectQuery: 'Ticket',
@@ -86,7 +127,7 @@ export default class ApiResponse extends React.Component {
     })
 
     if (!this.state.repos[selectedQuery]) {
-      fetchPopularRepos(selectedQuery)
+      fetchQuery(selectedQuery)
         .then((data) => {
           this.setState(({ repos }) => ({
             repos: {
