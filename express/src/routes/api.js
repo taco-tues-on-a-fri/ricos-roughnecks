@@ -3,10 +3,12 @@ const router = Router();
 
 
 import { pool } from '../loaders/db';
-import { index } from '../controllers/api_controller';
+import { index, query_ticket } from '../controllers/api_controller';
 
 //| GET | index
 //|------------------------------------------------------------------------
 router.get('/', index);
+
+router.get('/ticket', query_ticket);
 
 export default router;
