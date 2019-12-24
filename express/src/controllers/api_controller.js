@@ -13,6 +13,27 @@ export function index(req, res, next) {
   })
 };
 
+//| GET person query
+//|------------------------------------------------------------------------
+export function query_person(req, res, next) {
+  pool.query('SELECT * FROM person', (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(results.rows)
+  })
+};
+
+//| GET project query
+//|------------------------------------------------------------------------
+export function query_project(req, res, next) {
+  pool.query('SELECT * FROM project', (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(results.rows)
+  })
+};
 
 //| GET ticket query
 //|------------------------------------------------------------------------
@@ -24,6 +45,8 @@ export function query_ticket(req, res, next) {
     res.status(200).json(results.rows)
   })
 };
+
+
 
 
 
