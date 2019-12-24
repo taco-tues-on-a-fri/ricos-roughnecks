@@ -10,29 +10,15 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    format: value => value.toLocaleString(),
-  },
-  {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: value => value.toLocaleString(),
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: value => value.toFixed(2),
-  },
+  { id: 'ticket_id', label: 'Ticket ID', minWidth: 100 },
+  { id: 'ticket_name', label: 'Ticket Name', minWidth: 100 },
+  { id: 'ticket_status', label: 'Ticket Status', minWidth: 100 },
+  { id: 'ticket_description', label: 'Ticket Description', minWidth: 100 },
+  { id: 'ticket_priority', label: 'Ticket Priority', minWidth: 100 },
+  { id: 'ticket_type', label: 'Ticket Type', minWidth: 100 },
+  { id: 'created_date', label: 'Created Date', minWidth: 100 },
+  { id: 'updated_date', label: 'Updated Date', minWidth: 100 },
+  { id: 'closed_date', label: 'Closed Date', minWidth: 100 },
 ];
 
 function createData(name, code, population, size) {
@@ -128,3 +114,38 @@ export default function StickyHeadTable() {
     </Paper>
   );
 }
+
+
+//| backup area of modified code snippets
+//|------------------------------------------------------------------------
+//| 
+
+// const columns = [
+//   { id: 'name', label: 'Name', minWidth: 170 },
+//   { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+//   {
+//     id: 'population',
+//     label: 'Population',
+//     minWidth: 170,
+//     align: 'right',
+//     format: value => value.toLocaleString(),
+//   },
+//   {
+//     id: 'size',
+//     label: 'Size\u00a0(km\u00b2)',
+//     minWidth: 170,
+//     align: 'right',
+//     format: value => value.toLocaleString(),
+//   },
+//   {
+//     id: 'density',
+//     label: 'Density',
+//     minWidth: 170,
+//     align: 'right',
+//     format: value => value.toFixed(2),
+//   },
+// ];
+
+
+//| 
+//|------------------------------------------------------------------------
