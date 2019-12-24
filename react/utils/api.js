@@ -35,7 +35,7 @@ export function getQuery (query) {
     })
 }
 
-export function fetchPopularRepos (query) {
+export function fetchQuery (query) {
   const endpoint = window.encodeURI(`http://localhost:9000/api/${query}`)
 
   return fetch(endpoint)
