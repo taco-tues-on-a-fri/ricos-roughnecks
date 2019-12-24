@@ -2,10 +2,10 @@ import { Router, Request, Response, NextFunction } from 'express';
 const router = Router();
 
 
-import { pool } from '../loaders/db'
-import { index } from '../controllers/index_controller'
+import { pool } from '../loaders/db';
+import { index } from '../controllers/api_controller';
 
-// GET | index
+//| GET | index
 //|------------------------------------------------------------------------
 router.get('/', index);
 
