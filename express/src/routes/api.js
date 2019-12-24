@@ -1,7 +1,5 @@
-// import { Router, Request, Response, NextFunction } from 'express';
-// const router = Router();
-import express from 'express';
-const router = express.Router();
+import { Router, Request, Response, NextFunction } from 'express';
+const router = Router();
 
 
 import { pool } from '../loaders/db'
