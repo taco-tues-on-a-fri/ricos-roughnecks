@@ -14,6 +14,18 @@ export function index(req, res, next) {
 };
 
 
+//| GET ticket query
+//|------------------------------------------------------------------------
+export function query_ticket(req, res, next) {
+  pool.query('SELECT * FROM ticket', (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(results.rows)
+  })
+};
+
+
 
 //   export function index(req, res) {
 //     res.render('index', { 
