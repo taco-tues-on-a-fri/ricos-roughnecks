@@ -4,6 +4,9 @@ import { getQuery, fetchQuery } from '../../../utils/api'
 import { FaUser, FaStar, FaCodeBranch, FaExclamationTriangle } from 'react-icons/fa'
 import Card from '../Card'
 
+//| Lists 3 query types, updates on click with styling to highlight selection
+//| Returns function `onUpdateQuery that changes state to `selectedQuery`
+//|------------------------------------------------------------------------
 function QueryNav ({ selected, onUpdateQuery }) {
   const tables = ['Person', 'Project', 'Ticket']
   
@@ -28,29 +31,34 @@ QueryNav.propTypes = {
   onUpdateQuery: PropTypes.func.isRequired
 }
 
-function ReposGrid ({ repos }) {
+//| *insert proper name here*(higher order function?) function that:
+//| creates grid styling by accepting an object called { query }
+//|     UNORDERED LIST makes grid with space around by:
+//|       Calling MAP on { query }
+//|------------------------------------------------------------------------
+function QueryGrid ({ query }) {
   return (
     <ul className='grid space-around'>
-      {repos.map((repo, index) => {
-        {/* const { name, owner, html_url, stargazers_count, forks, open_issues } = repo */}
-        const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = repo
-        {/* const { ticket_name } = owner */}
+      {query.map((response, index) => {
+        const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = response
 
         return (
           <li key={ticket_id}>
             <Card
-              header={`#${index + 1}`}
+              header={ticket_id}
               name={ticket_name}
             >
               <ul className='card-list'>
                 <li>
                   <FaUser color='rgb(255, 191, 116)' size={22} />
                   <a>
-                    {ticket_name}
+                    {`lvl-chld-01: ${ticket_type}`}
+                    {ticket_type}
                   </a>
                 </li>
                 <li>
                   <FaStar color='rgb(255, 215, 0)' size={22} />
+                  {`lvl-chld-02: ${ticket_status}`}
                   {ticket_status}
                 </li>
                 <li>
@@ -113,8 +121,8 @@ function ticketTable ({ columns }) {
 
 export default class ApiResponse extends React.Component {
   state = {
-    selectQuery: 'Ticket',
-    repos: {},
+    selectedQuery: 'Ticket',
+    query: {},
     error: null
   }
   componentDidMount () {
@@ -126,32 +134,32 @@ export default class ApiResponse extends React.Component {
       error: null
     })
 
-    if (!this.state.repos[selectedQuery]) {
+    if (!this.state.query[selectedQuery]) {
       fetchQuery(selectedQuery)
         .then((data) => {
-          this.setState(({ repos }) => ({
-            repos: {
-              ...repos,
+          this.setState(({ query }) => ({
+            query: {
+              ...query,
               [selectedQuery]: data
             }
           }))
         })  
         .catch(() => {
-          console.warn('Error fetching repos: ', error)
+          console.warn('Error fetching query: ', error)
 
           this.setState({
-            error: `There was an error fetching the repositories.`
+            error: `There was an error fetching the query.`
           })
         })
     }
   }
   isLoading = () => {
-    const { selectedQuery, repos, error } = this.state
+    const { selectedQuery, query, error } = this.state
 
-    return !repos[selectedQuery] && error === null
+    return !query[selectedQuery] && error === null
   }
   render() {
-    const { selectedQuery, repos, error } = this.state
+    const { selectedQuery, query, error } = this.state
 
     return (
       <React.Fragment>
@@ -160,11 +168,11 @@ export default class ApiResponse extends React.Component {
           onUpdateQuery={this.updateQuery}
         />
 
-        {/* {this.isLoading() && <Loading text='Fetching Repos' />} */}
+        {/* {this.isLoading() && <Loading text='Fetching query' />} */}
 
         {error && <p className='center-text error'>{error}</p>}
 
-        {repos[selectedQuery] && <ReposGrid repos={repos[selectedQuery]} />}
+        {query[selectedQuery] && <QueryGrid query={query[selectedQuery]} />}
       </React.Fragment>
     ) 
   }
