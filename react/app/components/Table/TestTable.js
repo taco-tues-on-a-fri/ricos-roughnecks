@@ -8,116 +8,139 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import { getQuery, fetchQuery } from '../../../utils/api'
+import util from 'util'
 
-
-function create_table ({ query }) {
-  return
+function QueryNav ({ selected, onUpdateQuery }) {
+  const tables = ['Person', 'Project', 'Ticket']
+  
+  return(
+    <ul className='flex-center'>
+      {tables.map((query) => (
+        <li key={query}>
+          <button 
+            className='btn-clear nav-link'
+            style={query === selected ? { color: 'rgb(187, 46, 31)' } : null}
+            onClick={() => onUpdateQuery(query)}>
+            {query}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
 }
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+function renderTableData({ query }) {
+  console.log('Inside renderTableData')
+  console.log(util.inspect(query))
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+  return query.map((column, index) => {
+    const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
+    return (
+      <tr key={ticket_id}>
+        <td>{ticket_id}</td>
+        <td>{ticket_name}</td>
+        <td>{ticket_status}</td>
+        <td>{ticket_description}</td>
+        <td>{ticket_priority}</td>
+        <td>{ticket_type}</td>
+        <td>{created_date}</td>
+        <td>{updated_date}</td>
+        <td>{closed_date}</td>
+      </tr>
+    )
+  })
+}
+function renderTableHeader() {
+  console.log('Inside renderTableHeader')
+  // let header = Object.keys(this.state.query[0])
+  let header = { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date }
+  return header.map((key, index) => {
+    return <th key={index}>{key.toUpperCase()}</th>
+  })
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-export default function TestTable() {
-  const classes = useStyles();
-
+function QueryGrid ({ query }) {
+  console.log('Inside QueryGrid')
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+    <div>
+      <h1> React Dynamic Table </h1>
+      <table id={'students'}>
+        <tbody>
+        {/* <tr>{this.renderTableHeader()}</tr> */}
+          {renderTableData({ query })}
+        </tbody>
+      </table>
+    </div>
+  )
 }
 
-//|------------------------------------------------------------------------
-// export default class TestTable extends React.Component {
+
+export default class DynamicTable extends React.Component {
+  state = {
+    selectedQuery: 'Ticket',
+    query: {},
+    error: null
+  }
+  componentDidMount () {
+    this.updateQuery(this.state.selectedQuery)
+  }
+  updateQuery = (selectedQuery) => {
+    this.setState({
+      selectedQuery,
+      error: null
+    })
+    if (!this.state.query[selectedQuery]) {
+      fetchQuery(selectedQuery)
+        .then((data) => {
+          this.setState(({ query }) => ({
+            query: {
+              ...query, 
+              [selectedQuery]: data
+            }
+          }))
+        })  
+        .catch(() => {
+          console.warn('Error fetching query: ', error)
+
+          this.setState({
+            error: `There was an error fetching the query.`
+          })
+        })
+    }
+  }
+  isLoading = () => {
+    const { selectedQuery, query, error } = this.state
+
+    return !query[selectedQuery] && error === null
+  }
+  render() {
+    const { selectedQuery, query, error } = this.state
+
+    return (
+      <React.Fragment>
+        <QueryNav
+          selected={selectedQuery}
+          onUpdateQuery={this.updateQuery}
+        />
+        {this.isLoading() && <p>LOADING</p>}
+
+        {error && <p className='center-text error'>{error}</p>}
+
+        {query[selectedQuery] && <QueryGrid query={query[selectedQuery]} />}
+      </React.Fragment>
+    ) 
+  }
+}
+
 //   state = {
-//     query: {},
-//     error: null,
+//     students: [
+//       { id: 1, name: 'Wasif', age: 21, email: 'wasif@email.com' },
+//       { id: 2, name: 'Ali', age: 19, email: 'ali@email.com' },
+//       { id: 3, name: 'Saad', age: 16, email: 'saad@email.com' },
+//       { id: 4, name: 'Asad', age: 25, email: 'asad@email.com' }
+//     ]
 //   }
-//   render(){
-//     return (
-//       <Paper className={classes.root}>
-//       <TableContainer className={classes.container}>
-//         <Table stickyHeader aria-label="sticky table">
-//           <TableHead>
-//             <TableRow>
-//               {columns.map(column => (
-//                 <TableCell
-//                   key={column.id}
-//                   align={column.align}
-//                   style={{ minWidth: column.minWidth }}
-//                 >
-//                   {column.label}
-//                 </TableCell>
-//               ))}
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-//               return (
-//                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-//                   {columns.map(column => {
-//                     const value = row[column.id];
-//                     return (
-//                       <TableCell key={column.id} align={column.align}>
-//                         {column.format && typeof value === 'number' ? column.format(value) : value}
-//                       </TableCell>
-//                     );
-//                   })}
-//                 </TableRow>
-//               );
-//             })}
-//           </TableBody>
-//         </Table>
-//       </TableContainer>
-//       <TablePagination
-//         rowsPerPageOptions={[10, 25, 100]}
-//         component="div"
-//         count={rows.length}
-//         rowsPerPage={rowsPerPage}
-//         page={page}
-//         onChangePage={handleChangePage}
-//         onChangeRowsPerPage={handleChangeRowsPerPage}
-//       />
-//     </Paper>
-//     )
-//   }
+  
+  
 // }
-//|------------------------------------------------------------------------
