@@ -31,8 +31,8 @@ function QueryNav ({ selected, onUpdateQuery }) {
 }
 
 function renderTableData({ query }) {
-  console.log('Inside renderTableData')
-  console.log(util.inspect(query))
+  // console.log('Inside renderTableData')
+  // console.log(util.inspect(query))
 
   return query.map((column, index) => {
     const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
@@ -51,12 +51,13 @@ function renderTableData({ query }) {
     )
   })
 }
-function renderTableHeader() {
+function renderTableHeader({ query }) {
   console.log('Inside renderTableHeader')
-  // let header = Object.keys(this.state.query[0])
-  let header = { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date }
+  console.log(util.inspect(query))
+  let header = Object.keys(query[0])
+  // { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date }
   return header.map((key, index) => {
-    return <th key={index}>{key.toUpperCase()}</th>
+    return <th key={index}>{key}</th>
   })
 }
 
@@ -67,7 +68,7 @@ function QueryGrid ({ query }) {
       <h1> React Dynamic Table </h1>
       <table id={'students'}>
         <tbody>
-        {/* <tr>{this.renderTableHeader()}</tr> */}
+        <tr>{renderTableHeader({ query })}</tr>
           {renderTableData({ query })}
         </tbody>
       </table>
