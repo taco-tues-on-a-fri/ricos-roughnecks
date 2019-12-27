@@ -78,6 +78,73 @@ function QueryGrid ({ query }) {
   )
 }
 
+
+export default class ApiResponse extends React.Component {
+  state = {
+    selectedQuery: 'Ticket',
+    query: {},
+    error: null
+  }
+  componentDidMount () {
+    this.updateQuery(this.state.selectedQuery)
+  }
+  updateQuery = (selectedQuery) => {
+    this.setState({
+      selectedQuery,
+      error: null
+    })
+
+    //if statement caches state in 'query' state object and only fetches if null
+    if (!this.state.query[selectedQuery]) {
+      fetchQuery(selectedQuery)
+        .then((data) => {
+//call setState passing in function, and react will invoke function passing current state which is a destructured object
+//will update the new query based on the current query.
+//the return from this function will be merged with the current state - 'query'
+          this.setState(({ query }) => ({
+            query: {
+              ...query, //all of properties and merge it
+              [selectedQuery]: data
+            }
+          }))
+        })  
+        .catch(() => {
+          console.warn('Error fetching query: ', error)
+
+          this.setState({
+            error: `There was an error fetching the query.`
+          })
+        })
+    }
+  }
+  isLoading = () => {
+    const { selectedQuery, query, error } = this.state
+
+    return !query[selectedQuery] && error === null
+  }
+  render() {
+    const { selectedQuery, query, error } = this.state
+
+    return (
+      <React.Fragment>
+        <QueryNav
+          selected={selectedQuery}
+          onUpdateQuery={this.updateQuery}
+        />
+
+        {/* {this.isLoading() && <Loading text='Fetching query' />} */}
+        {this.isLoading() && <p>LOADING</p>}
+
+        {error && <p className='center-text error'>{error}</p>}
+
+        {query[selectedQuery] && <QueryGrid query={query[selectedQuery]} />}
+      </React.Fragment>
+    ) 
+  }
+}
+
+//| Idea area
+//|------------------------------------------------------------------------
 function ticketTable ({ columns }) {
   return (
     <ul className='grid space-around'>
@@ -117,63 +184,4 @@ function ticketTable ({ columns }) {
       })}
     </ul>
   )
-}
-
-export default class ApiResponse extends React.Component {
-  state = {
-    selectedQuery: 'Ticket',
-    query: {},
-    error: null
-  }
-  componentDidMount () {
-    this.updateQuery(this.state.selectedQuery)
-  }
-  updateQuery = (selectedQuery) => {
-    this.setState({
-      selectedQuery,
-      error: null
-    })
-
-    if (!this.state.query[selectedQuery]) {
-      fetchQuery(selectedQuery)
-        .then((data) => {
-          this.setState(({ query }) => ({
-            query: {
-              ...query,
-              [selectedQuery]: data
-            }
-          }))
-        })  
-        .catch(() => {
-          console.warn('Error fetching query: ', error)
-
-          this.setState({
-            error: `There was an error fetching the query.`
-          })
-        })
-    }
-  }
-  isLoading = () => {
-    const { selectedQuery, query, error } = this.state
-
-    return !query[selectedQuery] && error === null
-  }
-  render() {
-    const { selectedQuery, query, error } = this.state
-
-    return (
-      <React.Fragment>
-        <QueryNav
-          selected={selectedQuery}
-          onUpdateQuery={this.updateQuery}
-        />
-
-        {/* {this.isLoading() && <Loading text='Fetching query' />} */}
-
-        {error && <p className='center-text error'>{error}</p>}
-
-        {query[selectedQuery] && <QueryGrid query={query[selectedQuery]} />}
-      </React.Fragment>
-    ) 
-  }
 }
