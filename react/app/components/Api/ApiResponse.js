@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { getQuery, fetchQuery } from '../../../utils/api'
 import { FaUser, FaStar, FaCodeBranch, FaExclamationTriangle } from 'react-icons/fa'
-import Card from '../Card'
+import Card from '../Card/Card'
 
 //| Lists 3 query types, updates on click with styling to highlight selection
 //| Returns function `onUpdateQuery that changes state to `selectedQuery`
