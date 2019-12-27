@@ -30,51 +30,54 @@ function QueryNav ({ selected, onUpdateQuery }) {
   )
 }
 
-function renderTableData({ query }) {
-  // console.log('Inside renderTableData')
-  // console.log(util.inspect(query))
+function RenderRow({ data }) {
 
-  return query.map((column, index) => {
-    const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
-    return (
-      <tr key={ticket_id}>
-        <td>{ticket_id}</td>
-        <td>{ticket_name}</td>
-        <td>{ticket_status}</td>
-        <td>{ticket_description}</td>
-        <td>{ticket_priority}</td>
-        <td>{ticket_type}</td>
-        <td>{created_date}</td>
-        <td>{updated_date}</td>
-        <td>{closed_date}</td>
-      </tr>
-    )
+
+  return data.map((row, index)=>{
+    const  [first]  = row
+// console.log(util.inspect(row))
+// console.log(util.inspect(first))
+console.log(first)
+    return <td key={first}>{row}</td>
   })
 }
-function renderTableHeader({ query }) {
-  console.log('Inside renderTableHeader')
-  console.log(util.inspect(query))
-  let header = Object.keys(query[0])
+
+function GetHeader({ data }) {
+  // console.log('Inside GetHeader')
+  // console.log(util.inspect(data))
+  let header = Object.keys(data[0])
   // { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date }
-  return header.map((key, index) => {
-    return <th key={index}>{key}</th>
+  return header.map((row, index) => {
+    return <th key={index}>{row}</th>
+    //return <th key={row[index]+''+index}>{row[index]}</th>
   })
 }
+
+// getRowsData = function(){
+//   var items = this.props.data;
+//   var keys = this.getKeys();
+  
+//   return items.map((row, index)=>{
+//     return <tr key={index}><RenderRow key={index} data={row} keys={keys}/></tr>
+//   })
+// }
 
 function QueryGrid ({ query }) {
-  console.log('Inside QueryGrid')
   return (
     <div>
       <h1> React Dynamic Table </h1>
-      <table id={'students'}>
-        <tbody>
-        <tr>{renderTableHeader({ query })}</tr>
-          {renderTableData({ query })}
-        </tbody>
+      <table id='query-table'>
+        <tr>
+          <GetHeader data={query}/>
+        </tr>
+        <tr>
+          <RenderRow data={query}/>
+        </tr>
       </table>
     </div>
   )
 }
+
 
 
 export default class DynamicTable extends React.Component {
@@ -128,20 +131,154 @@ export default class DynamicTable extends React.Component {
 
         {error && <p className='center-text error'>{error}</p>}
 
-        {query[selectedQuery] && <QueryGrid query={query[selectedQuery]} />}
+        {query[selectedQuery] && <QueryGrid 
+          query={query[selectedQuery]}
+          selectedQuery={selectedQuery}
+          />
+        }
       </React.Fragment>
     ) 
   }
 }
 
-//   state = {
-//     students: [
-//       { id: 1, name: 'Wasif', age: 21, email: 'wasif@email.com' },
-//       { id: 2, name: 'Ali', age: 19, email: 'ali@email.com' },
-//       { id: 3, name: 'Saad', age: 16, email: 'saad@email.com' },
-//       { id: 4, name: 'Asad', age: 25, email: 'asad@email.com' }
-//     ]
-//   }
-  
-  
+// function QueryGrid ({ query }) {
+//   console.log('Inside QueryGrid')
+//   return (
+//     <div>
+//       <h1> React Dynamic Table </h1>
+//       <table id={'students'}>
+//         <tbody>
+//         <tr>{renderTableHeader({ query })}</tr>
+//           {renderTableData({ query })}
+//         </tbody>
+//       </table>
+//     </div>
+//   )
 // }
+
+
+
+
+
+
+
+//|------------------------------------------------------------------------
+// function renderTableData({ query }) {
+//   // console.log('Inside renderTableData')
+//   // console.log(util.inspect(query))
+
+//   return query.map((column, index) => {
+//     const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
+//     return (
+//       <tr key={index}>
+//         {/* <td>{index}</td> */}
+//         <td>{ticket_id}</td>
+//         <td>{ticket_name}</td>
+//         <td>{ticket_status}</td>
+//         <td>{ticket_description}</td>
+//         <td>{ticket_priority}</td>
+//         <td>{ticket_type}</td>
+//         <td>{created_date}</td>
+//         <td>{updated_date}</td>
+//         <td>{closed_date}</td>
+//       </tr>
+//     )
+//   })
+// }
+//|------------------------------------------------------------------------
+
+
+//|------------------------------------------------------------------------
+// function renderTableData({ query }) {
+//   console.log('Inside renderTableData')
+//   console.log(util.inspect(querySpread)
+//   )
+//   return querySpread.keys.map((key, index)=>{
+//     return <td key={query[key]}>{query[key]}</td>
+//   })
+
+//   // return query.map((column, index) => {
+//   //   const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
+//   //   return (
+//   //     <tr key={index}>
+//   //       {/* <td>{index}</td> */}
+//   //       <td>{ticket_id}</td>
+//   //       <td>{ticket_name}</td>
+//   //       <td>{ticket_status}</td>
+//   //       <td>{ticket_description}</td>
+//   //       <td>{ticket_priority}</td>
+//   //       <td>{ticket_type}</td>
+//   //       <td>{created_date}</td>
+//   //       <td>{updated_date}</td>
+//   //       <td>{closed_date}</td>
+//   //     </tr>
+//   //   )
+//   // })
+// }
+//|------------------------------------------------------------------------
+
+//|------------------------------------------------------------------------
+// function renderTableData({ query }) {
+//   console.log('Inside renderTableData')
+//   console.log(util.inspect(query))
+
+//   return query.map((key, index)=>{
+//     // return <td key={Object.keys[key]}>{Object.keys[key]}</td>
+//     return <td key={index}>{key}</td>
+//   })
+  // return header.map((key, index) => {
+  //   return <th key={index}>{key}</th>
+  // })
+
+  // return query.map((column, index) => {
+  //   const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
+  //   return (
+  //     <tr key={index}>
+  //       {/* <td>{index}</td> */}
+  //       <td>{ticket_id}</td>
+  //       <td>{ticket_name}</td>
+  //       <td>{ticket_status}</td>
+  //       <td>{ticket_description}</td>
+  //       <td>{ticket_priority}</td>
+  //       <td>{ticket_type}</td>
+  //       <td>{created_date}</td>
+  //       <td>{updated_date}</td>
+  //       <td>{closed_date}</td>
+  //     </tr>
+  //   )
+  // })
+// }
+//|------------------------------------------------------------------------
+
+//|------------------------------------------------------------------------
+// function QueryGrid ({ query, selectedQuery }) {
+//   return (
+//     <div>
+//       <h1> React Dynamic Table </h1>
+//       <table id={'students'}>
+//         <tbody>
+//         <tr>{renderTableHeader({ query })}</tr>
+//           {/* {renderTableData({ query })} */}
+//           {renderTableData( {query} )}
+//         </tbody>
+//       </table>
+//     </div>
+//   )
+// }
+//|------------------------------------------------------------------------
+
+// function RenderRow({ data }) {
+//   console.log('firstKey')
+//   // console.log(util.inspect(firstKey))
+//   return data.map((row, index)=>{
+//     // let firstKey = Object.keys(row)[0]
+//     console.log(util.inspect(row))
+//     // console.log('Inside data.map')
+//     // console.log(util.inspect(row))
+//     // return <td key={Object.keys[key]}>{Object.keys[key]}</td>
+//     // return <td key={index}>{row}</td>
+//     return <td key={row[0]}>{row}</td>
+//   })
+// }
+
+//|------------------------------------------------------------------------
