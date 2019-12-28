@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Create an editable cell renderer
-export default function EditableCell ({
+export const EditableCell = ({
   cell: { value: initialValue },
   row: { index },
   column: { id },
