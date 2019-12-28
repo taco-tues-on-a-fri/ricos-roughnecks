@@ -1,4 +1,10 @@
-//| 12-28-19: Same working version, just refactored.
+//| 12-28-19: Working version.
+//| 12-28-19: fixed onUpdateQuery={setSelectedQuery} being named wrong.
+//|------------------------------------------------------------------------
+//| 12-28-19: Errors:
+//| 12-28-19: Warning: validateDOMNesting(...): <tr> cannot appear as a child of <ul>.
+//| 12-28-19: Clicked on 'Project' button:
+//| 12-28-19:     Warning: Each child in a list should have a unique "key" prop.
 //|------------------------------------------------------------------------
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -96,7 +102,7 @@ export default function TableSelect () {
     <React.Fragment>
       <QueryNav
         selected={selectedQuery}
-        onUpdateLanguage={setSelectedQuery}
+        onUpdateQuery={setSelectedQuery}
       />
 
       {isLoading() && <p>LOADING</p>}
