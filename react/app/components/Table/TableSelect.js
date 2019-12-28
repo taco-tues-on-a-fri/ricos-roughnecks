@@ -1,13 +1,8 @@
-//| 12-27-19: Working version.
-//| 12-27-19: Outputs dynamic amount of data rows -with NO headers.
+//| 12-28-19: Same working version, just refactored.
 //|------------------------------------------------------------------------
 import React from 'react'
 import PropTypes from 'prop-types'
-// import { fetchPopularRepos } from '../utils/api'
 import { FaUser, FaStar, FaCodeBranch, FaExclamationTriangle } from 'react-icons/fa'
-// import Loading from './Loading'
-// import Card from './Card'
-// import Tooltip from './Tooltip'
 import { fetchQuery } from '../../../utils/api'
 import util from 'util'
 
