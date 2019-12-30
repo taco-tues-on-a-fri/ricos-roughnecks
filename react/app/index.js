@@ -3,12 +3,18 @@ import ReactDom from 'react-dom'
 require('dotenv').config()
 import './index.css'
 import DynamicTable from './components/Table/DynamicTable'
+import BasicTable from './components/Table/BasicTable'
+import Rows from './components/Table/Rows'
+import TableSelect from './components/Table/TableSelect'
 
 
 class App extends React.Component {
   render() {
     return (
-      <DynamicTable />
+      // <DynamicTable />
+      <BasicTable />
+      // <Rows />
+      // <TableSelect />
     )
   }
 }
