@@ -77,14 +77,14 @@ filterGreaterThan.autoRemove = val => typeof val !== 'number'
 
 
 //| generate Table data
+// Add a new fuzzyTextFilterFn filter type.
+// Or, override the default text filter to use
+// "startWith"
 //|------------------------------------------------------------------------
 function Table({ columns, data, updateMyData, skipReset }) {
   const filterTypes = React.useMemo(
     () => ({
-      // Add a new fuzzyTextFilterFn filter type.
       fuzzyText: fuzzyTextFilterFn,
-      // Or, override the default text filter to use
-      // "startWith"
       text: (rows, id, filterValue) => {
         return rows.filter(row => {
           const rowValue = row.values[id]
@@ -95,15 +95,13 @@ function Table({ columns, data, updateMyData, skipReset }) {
             : true
         })
       },
-    }),
-    []
+    }), []
   )
 
+  // set up default Filter UI & default editable cell
   const defaultColumn = React.useMemo(
     () => ({
-      // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
-      // And also our default editable cell
       Cell: EditableCell,
     }),
     []
@@ -115,10 +113,7 @@ function Table({ columns, data, updateMyData, skipReset }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
-
-    // The rest of these things are super handy, too ;)
+    page, // Instead of using 'rows' use page - which only shows the rows on active page
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -128,21 +123,13 @@ function Table({ columns, data, updateMyData, skipReset }) {
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize, groupBy, expanded, filters, selectedRowIds },
-  } = useTable(
-    {
+  } = useTable({
       columns,
       data,
       defaultColumn,
       filterTypes,
-      // updateMyData isn't part of the API, but
-      // anything we put into these options will
-      // automatically be available on the instance.
-      // That way we can call this function from our
-      // cell renderer!
-      updateMyData,
-      // We also need to pass this so the page doesn't change
-      // when we edit the data.
-      autoResetPage: !skipReset,
+      updateMyData,//anything put into these options will automatically be available on the instance. can call this function from our cell renderer!
+      autoResetPage: !skipReset, //need to pass this so the page doesn't change when we edit the data.
       autoResetSelectedRows: !skipReset,
     },
     useFilters,
@@ -157,18 +144,15 @@ function Table({ columns, data, updateMyData, skipReset }) {
         return [
           {
             id: 'selection',
-            // Make this column a groupByBoundary. This ensures that groupBy columns
-            // are placed after it
+            // Make this column a groupByBoundary. Ensures that groupBy columns are placed after it
             groupByBoundary: true,
-            // The header can use the table's getToggleAllRowsSelectedProps method
-            // to render a checkbox
+            // The header can use the table's getToggleAllRowsSelectedProps method to render a checkbox
             Header: ({ getToggleAllRowsSelectedProps }) => (
               <div>
                 <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
               </div>
             ),
-            // The cell can use the individual row's getToggleRowSelectedProps method
-            // to the render a checkbox
+            // The cell can use the individual row's getToggleRowSelectedProps method to the render a checkbox
             Cell: ({ row }) => (
               <div>
                 <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
@@ -392,7 +376,10 @@ export default function DynamicTable () {
     []
   )
 
-  const [data, setData] = React.useState(() => makeData(10000))
+
+  const [data, setData] = React.useState(() => makeData())
+  console.log('data:')
+  console.log(data)
   const [originalData] = React.useState(data)
 
   // We need to keep the table from resetting the pageIndex when we
@@ -418,7 +405,7 @@ export default function DynamicTable () {
     )
   }
 
-  // After data chagnes, we turn the flag back off
+  // After data changes, we turn the flag back off
   // so that if data actually changes when we're not
   // editing it, the page is reset
   React.useEffect(() => {
