@@ -1,5 +1,6 @@
 import React from 'react';
-import { getQuery, fetchQuery } from '../../../utils/api'
+import { fetchQuery } from '../../../utils/api'
+import { GetHeader, RenderRow, GetRowsData } from './GetRenderTableData'
 import util from 'util'
 
 function QueryNav ({ selected, onUpdateQuery }) {
@@ -22,73 +23,39 @@ function QueryNav ({ selected, onUpdateQuery }) {
 }
 
 
-function getKeys ({ data }){
-  return Object.keys(data[0]);
-}
+// function getKeys ({ data }){
+//   return Object.keys(data[0]);
+// }
 
-function GetHeader({ data }) {
-  let headerKeys = getKeys({data})
-  return headerKeys.map((column, index) => {
-    return <th key={index}>{column}</th>
-  })
-}
-
-function RenderRow ({ data, keys }) {
-  console.log('insideRenderRow:')
-  console.log(util.inspect(keys))
-  return keys.map((key, index) => {
-    return (
-      <td key={data[key]}>{data[key]}</td>
-    )
-  }) 
-}
-
-function GetRowsData ({ data }) {
-  let rowKeys = getKeys({data})
-
-  return data.map((row, index) => {
-    return (
-      <tr key={index}>
-        <RenderRow key={index} data={row} keys={rowKeys} />
-      </tr>
-    )
-  })
-}
-
-function RenderRowz ({ data }) {
-  return (
-    <tbody>
-      {data.map((column, index) => {
-        const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
-
-        return (
-          <tr key={ticket_id}>
-            <td>{ticket_id}</td>
-            <td>{ticket_name}</td>
-            <td>{ticket_status}</td>
-            <td>{ticket_description}</td>
-            <td>{ticket_priority}</td>
-            <td>{ticket_type}</td>
-            <td>{created_date}</td>
-            <td>{updated_date}</td>
-            <td>{closed_date}</td>
-          </tr>
-        )
-      })}
-    </tbody>
-  )
-}
-
-
-
-// getRowsData = function(){
-//   var items = this.props.data;
-//   var keys = this.getKeys();
-  
-//   return items.map((row, index)=>{
-//     return <tr key={index}><RenderRow key={index} data={row} keys={keys}/></tr>
+// function GetHeader({ data }) {
+//   let headerKeys = getKeys({data})
+//   return headerKeys.map((column, index) => {
+//     return <th key={index}>{column}</th>
 //   })
 // }
+
+// function RenderRow ({ data, keys }) {
+//   console.log('insideRenderRow:')
+//   console.log(util.inspect(keys))
+//   return keys.map((key, index) => {
+//     return (
+//       <td key={data[key]}>{data[key]}</td>
+//     )
+//   }) 
+// }
+
+// function GetRowsData ({ data }) {
+//   let rowKeys = getKeys({data})
+
+//   return data.map((row, index) => {
+//     return (
+//       <tr key={index}>
+//         <RenderRow key={index} data={row} keys={rowKeys} />
+//       </tr>
+//     )
+//   })
+// }
+
 
 function QueryGrid ({ query }) {
   return (
@@ -327,3 +294,38 @@ export default class CreateTable extends React.Component {
 // }
 
 //|------------------------------------------------------------------------
+
+// function RenderRowz ({ data }) {
+//   return (
+//     <tbody>
+//       {data.map((column, index) => {
+//         const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
+
+//         return (
+//           <tr key={ticket_id}>
+//             <td>{ticket_id}</td>
+//             <td>{ticket_name}</td>
+//             <td>{ticket_status}</td>
+//             <td>{ticket_description}</td>
+//             <td>{ticket_priority}</td>
+//             <td>{ticket_type}</td>
+//             <td>{created_date}</td>
+//             <td>{updated_date}</td>
+//             <td>{closed_date}</td>
+//           </tr>
+//         )
+//       })}
+//     </tbody>
+//   )
+// }
+
+//|------------------------------------------------------------------------
+
+// getRowsData = function(){
+//   var items = this.props.data;
+//   var keys = this.getKeys();
+  
+//   return items.map((row, index)=>{
+//     return <tr key={index}><RenderRow key={index} data={row} keys={keys}/></tr>
+//   })
+// }
