@@ -1,13 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 import { getQuery, fetchQuery } from '../../../utils/api'
 import util from 'util'
 
@@ -30,28 +21,65 @@ function QueryNav ({ selected, onUpdateQuery }) {
   )
 }
 
-function RenderRow({ data }) {
-  console.log('Inside RenderRow')
-  console.log(util.inspect(data))
 
-  return data.map((row, index)=>{
-    console.log('Inside data.map')
-    console.log(util.inspect(row))
-    // return <td key={Object.keys[key]}>{Object.keys[key]}</td>
-    // return <td key={index}>{row}</td>
-    return <td key={row[index]}>{row[index]}</td>
-  })
+function getKeys ({ data }){
+  return Object.keys(data[0]);
 }
 
 function GetHeader({ data }) {
-  // console.log('Inside GetHeader')
-  // console.log(util.inspect(data))
-  let header = Object.keys(data[0])
-  // { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date }
-  return header.map((row, index) => {
-    return <th key={index}>{row}</th>
+  let headerKeys = getKeys({data})
+  return headerKeys.map((column, index) => {
+    return <th key={index}>{column}</th>
   })
 }
+
+function RenderRow ({ data, keys }) {
+  console.log('insideRenderRow:')
+  console.log(util.inspect(keys))
+  return keys.map((key, index) => {
+    return (
+      <td key={data[key]}>{data[key]}</td>
+    )
+  }) 
+}
+
+function GetRowsData ({ data }) {
+  let rowKeys = getKeys({data})
+
+  return data.map((row, index) => {
+    return (
+      <tr key={index}>
+        <RenderRow key={index} data={row} keys={rowKeys} />
+      </tr>
+    )
+  })
+}
+
+function RenderRowz ({ data }) {
+  return (
+    <tbody>
+      {data.map((column, index) => {
+        const { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date } = column
+
+        return (
+          <tr key={ticket_id}>
+            <td>{ticket_id}</td>
+            <td>{ticket_name}</td>
+            <td>{ticket_status}</td>
+            <td>{ticket_description}</td>
+            <td>{ticket_priority}</td>
+            <td>{ticket_type}</td>
+            <td>{created_date}</td>
+            <td>{updated_date}</td>
+            <td>{closed_date}</td>
+          </tr>
+        )
+      })}
+    </tbody>
+  )
+}
+
+
 
 // getRowsData = function(){
 //   var items = this.props.data;
@@ -67,12 +95,12 @@ function QueryGrid ({ query }) {
     <div>
       <h1> React Dynamic Table </h1>
       <table id='query-table'>
-        <tr>
-          <GetHeader data={query}/>
-        </tr>
-        <tr>
-          <RenderRow data={query}/>
-        </tr>
+        <thead>
+            <tr><GetHeader data={query}/></tr>
+        </thead>
+        <tbody>
+          <GetRowsData data={query}/>
+        </tbody>
       </table>
     </div>
   )
@@ -80,7 +108,7 @@ function QueryGrid ({ query }) {
 
 
 
-export default class DynamicTable extends React.Component {
+export default class CreateTable extends React.Component {
   state = {
     selectedQuery: 'Ticket',
     query: {},
@@ -265,4 +293,37 @@ export default class DynamicTable extends React.Component {
 //     </div>
 //   )
 // }
+//|------------------------------------------------------------------------
+
+// function RenderRow({ data }) {
+//   console.log('Inside RenderRow')
+//   console.log(util.inspect(data))
+
+//   return data.map((row, index)=>{
+//     console.log('Inside data.map')
+//     console.log(util.inspect(row))
+//     // return <td key={Object.keys[key]}>{Object.keys[key]}</td>
+//     // return <td key={index}>{row}</td>
+//     return <td key={row[index]}>{row[index]}</td>
+//   })
+// }
+
+//|------------------------------------------------------------------------
+
+// function QueryGrid ({ query }) {
+//   return (
+//     <div>
+//       <h1> React Dynamic Table </h1>
+//       <table id='query-table'>
+//         <tr>
+//           <GetHeader data={query}/>
+//         </tr>
+//         <tr>
+//           <RenderRow data={query}/>
+//         </tr>
+//       </table>
+//     </div>
+//   )
+// }
+
 //|------------------------------------------------------------------------
