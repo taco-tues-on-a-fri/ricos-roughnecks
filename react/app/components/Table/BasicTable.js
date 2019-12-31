@@ -202,12 +202,38 @@ function GetHeaders00({ data }) {
   })
 }
 
-function GetHeaders({ data }) {
+function GetHeaders01({ data }) {
   let headerKeys = getKeys({ data })
   return headerKeys.map((headerColumn, index) => {
     return {
       Header: formatHeader(headerColumn),
       accessor: headerColumn
+    }
+  })
+}
+
+function GetHeaders({ data }) {
+  let headerKeys = getKeys({ data })
+  return headerKeys.map((headerColumn, index) => {
+    if (headerColumn.includes('date')) {
+      return {
+        Header: formatHeader(headerColumn),
+        accessor: headerColumn,
+        Cell: ({ cell: { value } }) => {
+          return (
+            <>
+              {/* {moment(value).format('YYYY/MM/DD - HH:mm')} */}
+              {/* {moment(value).format('DD/MM/YYYY HH:mm')} */}
+              {value === null ? '' : moment(value).format('DD/MM/YYYY HH:mm')}
+            </>
+          )
+        }
+      }
+    } else {
+      return {
+        Header: formatHeader(headerColumn),
+        accessor: headerColumn
+      }
     }
   })
 }
