@@ -1,6 +1,6 @@
 import React from 'react';
 import { fetchQuery } from '../../../utils/api'
-import { GetHeader, RenderRow, GetRowsData } from './GetRenderTableData'
+import { GetHeader, RenderRow, GetRowsData } from './GetTableData'
 import util from 'util'
 
 function QueryNav ({ selected, onUpdateQuery }) {
