@@ -2,9 +2,28 @@ import React from 'react'
 import styled from 'styled-components'
 import { useTable } from 'react-table'
 import { fetchQuery } from '../../../utils/api'
+import moment from 'moment'
 
 
+//| Example for custom styling to solve a comma separated return of a list
+//| in this example - Genres
+//|------------------------------------------------------------------------
 
+function Genres({ values }) {
+  //Loop through the array and create a badge-like component instead of
+  //comma separated string
+  return (
+    <>
+      {values.map((genre, index) => {
+        return (
+          <span key={index} className="badge">
+            {genre}
+          </span>
+        )
+      })}
+    </>
+  )
+}
 
 
 function Table({ columns, data }) {
@@ -67,6 +86,25 @@ export default function BasicTable({ data }) {
             Header: "Ticket Status",
             accessor: "ticket_status"
           }
+          //| EXAMPLES!
+          // {
+          //   Header: "Genres",
+          //   accessor: "genres",
+          //   Cell: ({ cell: {value } }) => <Genres values={value} />
+          // }
+          // {
+          //   Header: "Runtime",
+          //   accessor: "runtime",
+          //   Cell: ({ cell: {value } }) => {
+          //   const hour = Math.floor(value / 60)
+          //   const min = Math.floor(value % 60)
+          //   return (
+          //     <>
+          //       {hour > 0 ? `${hour} hr${hour > 1 ? "s" : ""} ` : ""}
+          //       {min > 0 ? `${min} min${min > 1 ? "s" : ""}` : ""}
+          //     </>
+          //   )
+          // }
         ]
       },
       {
@@ -84,6 +122,23 @@ export default function BasicTable({ data }) {
           {
             Header: "Ticket Type",
             accessor: "ticket_type"
+          }
+        ]
+      },
+      {
+        //third group - Dates
+        Header: "Dates",
+        columns: [
+          {
+            Header: "Created Date",
+            accessor: "created_date",
+            Cell: ({ cell: { value } }) => {
+              return (
+                <>
+                  {moment(value).format('YYYY/MM/DD - HH:mm')}
+                </>
+              )
+            }
           }
         ]
       }
