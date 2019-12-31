@@ -95,7 +95,7 @@ function Table({ columns, data }) {
 
 }
 
-export default function BasicTable({ data }) {
+export function BasicTable({ data }) {
 
   const columns = React.useMemo(
     () => [
@@ -153,6 +153,72 @@ export default function BasicTable({ data }) {
             accessor: "ticket_type"
           }
         ]
+      },
+      {
+        //third group - Dates
+        Header: "Dates",
+        columns: [
+          {
+            Header: "Created Date",
+            accessor: "created_date",
+            Cell: ({ cell: { value } }) => {
+              return (
+                <>
+                  {/* {moment(value).format('YYYY/MM/DD - HH:mm')} */}
+                  {moment(value).format('DD/MM/YYYY HH:mm')}
+                </>
+              )
+            }
+          }
+        ]
+      }
+    ],
+    []
+  )
+
+  return (
+    <Styles>
+      <Table columns={columns} data={data} />
+    </Styles>
+  )
+}
+
+function getKeys ({ data }){
+  return Object.keys(data[0]);
+}
+
+function formatHeader (string){
+  return string.split('_').map(word => word.substring(0,1).toUpperCase()+ word.substring(1)).join(' ')
+}
+
+function GetHeaders00({ data }) {
+  let headerKeys = getKeys({ data })
+  return headerKeys.map((headerColumn, index) => {
+    return {
+      key: index,
+      dynamicHeader: formatHeader(headerColumn),
+      dynamicAccessor: headerColumn
+    }
+  })
+}
+
+function GetHeaders({ data }) {
+  let headerKeys = getKeys({ data })
+  return headerKeys.map((headerColumn, index) => {
+    return {
+      Header: formatHeader(headerColumn),
+      accessor: headerColumn
+    }
+  })
+}
+export default function DynamicBasicTable({ data }) {
+
+  const columns = React.useMemo(
+    () => [
+      {
+        //Main group - Dynamic Table
+        Header: "Dynamic Table",
+        columns: GetHeaders({ data })
       },
       {
         //third group - Dates
