@@ -1,17 +1,18 @@
 import React from 'react';
-// import { getQuery, fetchQuery } from '../../../utils/api'
 import util from 'util'
-
-
 
 function getKeys ({ data }){
   return Object.keys(data[0]);
 }
 
+function formatHeader (string){
+  return string.split('_').map(word => word.substring(0,1).toUpperCase()+ word.substring(1)).join(' ')
+}
+
 export function GetHeader({ data }) {
   let headerKeys = getKeys({data})
   return headerKeys.map((column, index) => {
-    return <th key={index}>{column}</th>
+    return <th key={index}>{formatHeader(column)}</th>
   })
 }
 
@@ -40,7 +41,7 @@ export function GetRowsData ({ data }) {
 export function GenerateTable ({ query }) {
   return (
     <div>
-      <h1> React Dynamic Table </h1>
+      {/* <h1> React Dynamic Table </h1> */}
       <table id='query-table'>
         <thead>
             <tr><GetHeader data={query}/></tr>
