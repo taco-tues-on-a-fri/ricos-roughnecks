@@ -1,5 +1,6 @@
 import React from 'react';
 import util from 'util'
+import moment from 'moment'
 
 function getKeys ({ data }){
   return Object.keys(data[0]);
@@ -7,6 +8,10 @@ function getKeys ({ data }){
 
 function formatHeader (string){
   return string.split('_').map(word => word.substring(0,1).toUpperCase()+ word.substring(1)).join(' ')
+}
+
+function formatDate (date) {
+  return moment(date).format('YYYY/MM/DD - HH:mm')
 }
 
 export function GetHeader({ data }) {
@@ -17,9 +22,11 @@ export function GetHeader({ data }) {
 }
 
 export function RenderRow ({ data, keys }) {
-  console.log('insideRenderRow:')
-  console.log(util.inspect(keys))
+  // console.log('insideRenderRow:')
+  // console.log(util.inspect(keys))
   return keys.map((key, index) => {
+    // console.log('inside RenderRow: data[key]')
+    // console.log(util.inspect(data[key]))
     return (
       <td key={data[key]}>{data[key]}</td>
     )
@@ -28,8 +35,12 @@ export function RenderRow ({ data, keys }) {
 
 export function GetRowsData ({ data }) {
   let rowKeys = getKeys({data})
-
+    console.log('inside rowKeys: rowKeys')
+    console.log(util.inspect(rowKeys))
+    
   return data.map((row, index) => {
+    // console.log('inside GetRowsData: row')
+    // console.log(util.inspect(row))
     return (
       <tr key={index}>
         <RenderRow key={index} data={row} keys={rowKeys} />
