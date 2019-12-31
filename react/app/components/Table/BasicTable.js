@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useTable } from 'react-table'
+import { useTable, useFilters } from 'react-table'
 import { fetchQuery } from '../../../utils/api'
 import moment from 'moment'
 
@@ -54,18 +54,38 @@ function Genres({ values }) {
 
 
 function Table({ columns, data }) {
+  // create a state
+  const [filterInput, setFilterInput] = useState("")
+  
+  // update the state when input changes
+  const handleFilterChange = event => {
+    const value = event.target.value || undefined
+    setFilter("ticket_name", value)
+    setFilterInput(value)
+  }
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
-  } = useTable({
-    columns,
-    data
-  })
+    prepareRow,
+    setFilter
+  } = useTable(
+    {
+      columns,
+      data
+    },
+    useFilters
+  )
+
 
   return (
+    <input
+      value={filterInput}
+      onChange={handleFilterChange}
+      placeholder={'Search'}
+    />
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
