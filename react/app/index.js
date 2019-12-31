@@ -1,12 +1,14 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 require('dotenv').config()
+import TableNav from './components/Table/TableNav'
+import './index.css'
+
 import Container from '@material-ui/core/Container';
 import StickyHeadTable from './components/Table/Table'
-import './index.css'
 import ApiResponse from './components/Api/ApiResponse'
 import TestTable from './components/Table/TestTable'
-import QueryTable from './components/Table/QueryTable'
+// import QueryTable from './components/Table/QueryTable'
 import DynamicTable from './components/Table/DynamicTable'
 // import '../db/index.js'
 
@@ -15,7 +17,8 @@ class App extends React.Component {
   render() {
     return (
       // <ApiResponse />
-      <TestTable />
+      <TableNav />
+      //<TestTable />
       // <QueryTable />
       // <DynamicTable />
     )
