@@ -22,26 +22,6 @@ function QueryNav ({ selected, onUpdateQuery }) {
   )
 }
 
-
-
-function QueryGrid ({ query }) {
-  return (
-    <div>
-      <h1> React Dynamic Table </h1>
-      <table id='query-table'>
-        <thead>
-            <tr><GetHeader data={query}/></tr>
-        </thead>
-        <tbody>
-          <GetRowsData data={query}/>
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-
-
 export default class TableNav extends React.Component {
   state = {
     selectedQuery: 'Ticket',
