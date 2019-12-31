@@ -31,14 +31,15 @@ function QueryNav ({ selected, onUpdateQuery }) {
 }
 
 function RenderRow({ data }) {
-
+  console.log('Inside RenderRow')
+  console.log(util.inspect(data))
 
   return data.map((row, index)=>{
-    const  [first]  = row
-// console.log(util.inspect(row))
-// console.log(util.inspect(first))
-console.log(first)
-    return <td key={first}>{row}</td>
+    console.log('Inside data.map')
+    console.log(util.inspect(row))
+    // return <td key={Object.keys[key]}>{Object.keys[key]}</td>
+    // return <td key={index}>{row}</td>
+    return <td key={row[index]}>{row[index]}</td>
   })
 }
 
@@ -49,7 +50,6 @@ function GetHeader({ data }) {
   // { ticket_id, ticket_name, ticket_status, ticket_description, ticket_priority, ticket_type, created_date, updated_date, closed_date }
   return header.map((row, index) => {
     return <th key={index}>{row}</th>
-    //return <th key={row[index]+''+index}>{row[index]}</th>
   })
 }
 
@@ -265,20 +265,4 @@ export default class DynamicTable extends React.Component {
 //     </div>
 //   )
 // }
-//|------------------------------------------------------------------------
-
-// function RenderRow({ data }) {
-//   console.log('firstKey')
-//   // console.log(util.inspect(firstKey))
-//   return data.map((row, index)=>{
-//     // let firstKey = Object.keys(row)[0]
-//     console.log(util.inspect(row))
-//     // console.log('Inside data.map')
-//     // console.log(util.inspect(row))
-//     // return <td key={Object.keys[key]}>{Object.keys[key]}</td>
-//     // return <td key={index}>{row}</td>
-//     return <td key={row[0]}>{row}</td>
-//   })
-// }
-
 //|------------------------------------------------------------------------
