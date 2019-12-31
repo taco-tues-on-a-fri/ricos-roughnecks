@@ -36,3 +36,19 @@ export function GetRowsData ({ data }) {
     )
   })
 }
+
+export function GenerateTable ({ query }) {
+  return (
+    <div>
+      <h1> React Dynamic Table </h1>
+      <table id='query-table'>
+        <thead>
+            <tr><GetHeader data={query}/></tr>
+        </thead>
+        <tbody>
+          <GetRowsData data={query}/>
+        </tbody>
+      </table>
+    </div>
+  )
+}
