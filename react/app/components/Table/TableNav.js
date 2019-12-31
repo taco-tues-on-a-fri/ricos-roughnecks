@@ -3,6 +3,7 @@ import { fetchQuery } from '../../../utils/api'
 import Loading from '../Utils/Loading'
 import { GetHeader, RenderRow, GetRowsData, GenerateTable } from './GetTableData'
 import util from 'util'
+import BasicTable from './BasicTable';
 
 function QueryNav ({ selected, onUpdateQuery }) {
   const tables = ['Person', 'Project', 'Ticket']
@@ -73,7 +74,8 @@ export default function TableNav () {
 
       {state.error && <p className='center-text error'>{state.error}</p>}
 
-      {state[selectedQuery] && <GenerateTable query={state[selectedQuery]} />}
+      {/* {state[selectedQuery] && <GenerateTable query={state[selectedQuery]} />} */}
+      {state[selectedQuery] && <BasicTable data={state[selectedQuery]} />}
     </React.Fragment>
   )
 }
