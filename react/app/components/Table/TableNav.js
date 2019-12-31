@@ -1,5 +1,6 @@
 import React from 'react';
 import { fetchQuery } from '../../../utils/api'
+import Loading from '../Utils/Loading'
 import { GetHeader, RenderRow, GetRowsData, GenerateTable } from './GetTableData'
 import util from 'util'
 
@@ -67,7 +68,8 @@ export default function TableNav () {
         onUpdateQuery={setSelectedQuery}
       />
 
-      {isLoading() && <p>LOADING</p>}
+      {/* {isLoading() && <p>LOADING</p>} */}
+      {isLoading() && <Loading text='Fetching Query' />}
 
       {state.error && <p className='center-text error'>{state.error}</p>}
 
