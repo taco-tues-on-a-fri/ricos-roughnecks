@@ -4,6 +4,35 @@ import { useTable } from 'react-table'
 import { fetchQuery } from '../../../utils/api'
 import moment from 'moment'
 
+const Styles = styled.div`
+  padding: 1rem;
+
+  table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+`
+
 
 //| Example for custom styling to solve a comma separated return of a list
 //| in this example - Genres
@@ -135,7 +164,8 @@ export default function BasicTable({ data }) {
             Cell: ({ cell: { value } }) => {
               return (
                 <>
-                  {moment(value).format('YYYY/MM/DD - HH:mm')}
+                  {/* {moment(value).format('YYYY/MM/DD - HH:mm')} */}
+                  {moment(value).format('DD/MM/YYYY HH:mm')}
                 </>
               )
             }
@@ -147,9 +177,9 @@ export default function BasicTable({ data }) {
   )
 
   return (
-    <div>
+    <Styles>
       <Table columns={columns} data={data} />
-    </div>
+    </Styles>
   )
 }
 
