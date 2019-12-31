@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { useTable, useFilters } from 'react-table'
+import { useTable, useFilters, useGlobalFilter } from 'react-table'
 import { fetchQuery } from '../../../utils/api'
 import moment from 'moment'
+import matchSorter from 'match-sorter'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -52,42 +53,94 @@ function Genres({ values }) {
   )
 }
 
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  const count = preGlobalFilteredRows.length
+
+  return (
+    <span>
+      Search:{' '}
+      <input
+        value={globalFilter || ''}
+        onChange={e => {
+          setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: '1.1rem',
+          border: '0',
+        }}
+      />
+    </span>
+  )
+}
+
+function fuzzyTextFilterFn(rows, id, filterValue) {
+  return matchSorter(rows, filterValue, { keys: [row => row.values[id]] })
+}
+
+// Let the table remove the filter if the string is empty
+fuzzyTextFilterFn.autoRemove = val => !val
+
 
 function Table({ columns, data }) {
-  // create a state
-  const [filterInput, setFilterInput] = useState("")
-  
-  // update the state when input changes
-  const handleFilterChange = event => {
-    const value = event.target.value || undefined
-    setFilter("ticket_name", value)
-    setFilterInput(value)
-  }
-
+  const filterTypes = React.useMemo(
+    () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+      fuzzyText: fuzzyTextFilterFn,
+      // Or, override the default text filter to use
+      // "startWith"
+      text: (rows, id, filterValue) => {
+        return rows.filter(row => {
+          const rowValue = row.values[id]
+          return rowValue !== undefined
+            ? String(rowValue)
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true
+        })
+      },
+    }),
+    []
+  )
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
-    setFilter
-  } = useTable(
-    {
-      columns,
-      data
-    },
-    useFilters
+    state,
+    flatColumns,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+  } = useTable({
+    columns,
+    data,
+    filterTypes,
+  },
+  useGlobalFilter
   )
 
-
   return (
-    <input
-      value={filterInput}
-      onChange={handleFilterChange}
-      placeholder={'Search'}
-    />
     <table {...getTableProps()}>
       <thead>
+        <tr>
+          <th
+            colSpan={flatColumns.length}
+            style={{
+              textAlign: 'right',
+            }}
+          >
+            <GlobalFilter
+              preGlobalFilteredRows={preGlobalFilteredRows}
+              globalFilter={state.globalFilter}
+              setGlobalFilter={setGlobalFilter}
+            />
+          </th>
+        </tr>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
