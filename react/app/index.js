@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 require('dotenv').config()
+import 'bootstrap/dist/css/bootstrap.min.css'
 import TableNav from './components/Table/TableNav'
 import './index.css'
 import BasicTable from './components/Table/BasicTable'
