@@ -1,4 +1,5 @@
 import React from 'react'
+import Table from 'react-bootstrap/Table'
 import styled from 'styled-components'
 import { useTable, useFilters, useGlobalFilter } from 'react-table'
 import { fetchQuery } from '../../../utils/api'
@@ -87,7 +88,7 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
 fuzzyTextFilterFn.autoRemove = val => !val
 
 
-function Table({ columns, data, selected }) {
+function CreateTable({ columns, data, selected }) {
   const filterTypes = React.useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
@@ -126,7 +127,7 @@ function Table({ columns, data, selected }) {
   )
 
   return (
-    <table {...getTableProps()}>
+    <Table striped bordered hover responsive variant="dark" {...getTableProps()}>
       <thead>
         <tr>
           <th
@@ -163,7 +164,7 @@ function Table({ columns, data, selected }) {
           )
         })}
       </tbody>
-    </table>
+    </Table>
   )
 }
 
@@ -213,9 +214,7 @@ export default function DynamicBasicTable({ data, selected }) {
   )
 
   return (
-    <Styles>
-      <Table columns={columns} data={data} selected={selected}/>
-    </Styles>
+      <CreateTable columns={columns} data={data} selected={selected}/>
   )
 }
 
