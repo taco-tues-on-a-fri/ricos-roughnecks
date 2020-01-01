@@ -1,10 +1,12 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 require('dotenv').config()
+// import 'bootswatch/dist/materia/bootstrap.min.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import TableNav from './components/Table/TableNav'
 import './index.css'
 import BasicTable from './components/Table/BasicTable'
+import CreateTicket from './components/Form/CreateTicket'
 
 // import Container from '@material-ui/core/Container';
 // import StickyHeadTable from './components/Table/Table'
@@ -19,7 +21,8 @@ class App extends React.Component {
   render() {
     return (
       // <BasicTable />
-      <TableNav />
+      // <TableNav />
+      <CreateTicket />
       //<TestTable />
       // <QueryTable />
       // <DynamicTable />
