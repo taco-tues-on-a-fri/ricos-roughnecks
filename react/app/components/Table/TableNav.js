@@ -75,7 +75,7 @@ export default function TableNav () {
       {state.error && <p className='center-text error'>{state.error}</p>}
 
       {/* {state[selectedQuery] && <GenerateTable query={state[selectedQuery]} />} */}
-      {state[selectedQuery] && <BasicTable data={state[selectedQuery]} />}
+      {state[selectedQuery] && <BasicTable data={state[selectedQuery]} selected={selectedQuery} />}
     </React.Fragment>
   )
 }
