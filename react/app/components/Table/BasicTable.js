@@ -57,6 +57,7 @@ function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
+  selected,
 }) {
   const count = preGlobalFilteredRows.length
 
@@ -68,7 +69,7 @@ function GlobalFilter({
         onChange={e => {
           setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
         }}
-        placeholder={`${count} records...`}
+        placeholder={`${count} ${selected}(s)`}
         style={{
           fontSize: '1.1rem',
           border: '0',
@@ -86,7 +87,7 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
 fuzzyTextFilterFn.autoRemove = val => !val
 
 
-function Table({ columns, data }) {
+function Table({ columns, data, selected }) {
   const filterTypes = React.useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
@@ -138,6 +139,7 @@ function Table({ columns, data }) {
               preGlobalFilteredRows={preGlobalFilteredRows}
               globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
+              selected={selected}
             />
           </th>
         </tr>
@@ -198,7 +200,7 @@ function GetHeaders({ data }) {
   })
 }
 
-export default function DynamicBasicTable({ data }) {
+export default function DynamicBasicTable({ data, selected }) {
   const columns = React.useMemo(
     () => [
       {
@@ -212,7 +214,7 @@ export default function DynamicBasicTable({ data }) {
 
   return (
     <Styles>
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={data} selected={selected}/>
     </Styles>
   )
 }
