@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
+import Form from 'react-bootstrap/Form'
 
 export default function FormikBasic() {
   return (
@@ -35,18 +36,25 @@ export default function FormikBasic() {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form onSubmit={handleSubmit}>
-            <input
+          <Form onSubmit={handleSubmit}>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              as="input"
               type="email"
               name="email"
+              placeholder="Enter Email"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
             />
+
             {errors.email && touched.email && errors.email}
-            <input
+            
+            <Form.Control
+              as="input"
               type="password"
               name="password"
+              placeholder="Enter Password"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
@@ -55,7 +63,7 @@ export default function FormikBasic() {
             <button type="submit" disabled={isSubmitting}>
               Submit
             </button>
-          </form>
+          </Form>
         )}
       </Formik>
     </div>
