@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
@@ -7,7 +7,71 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 
-export default function TicketInput({ onSubmit, label }) {
+export default function CreateTicket() {
+  const ticketName_ref = useRef()
+  const ticketType_ref = useRef()
+
+  const handleSubmit = event => {
+    event.preventDefault()
+
+    const ticketName = ticketName_ref.current.value
+    const ticketType = ticketType_ref.current.value
+
+    console.log(ticketName, ticketType)
+  }
+
+  const handleReset = () => {
+    ticketName_ref.current.value = ''
+    ticketType_ref.current.value = ''
+  }
+
+  return (
+    <Form>
+      <Form.Row>
+        <Form.Group as={Col} controlId="ticketName">
+          <Form.Label>Ticket Name</Form.Label>
+          <Form.Control 
+            as="input"
+            placeholder="Enter Ticket Name"
+            autoComplete="off"
+            ref={ticketName_ref}
+          />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="ticketType">
+          <Form.Label>Ticket Type</Form.Label>
+          <Form.Control 
+            as="select"
+            ref={ticketType_ref}
+          >
+            <option>Choose...</option>
+            <option>bug</option>
+            <option>improvement</option>
+          </Form.Control>
+        </Form.Group>
+      </Form.Row>
+      <Button 
+        type="submit"
+        onClick={handleSubmit}
+      >
+        Submit
+      </Button>
+      <Button 
+        type="submit"
+        onClick={handleReset}
+      >
+        Reset
+      </Button>
+    </Form>
+  )
+}
+
+
+
+
+
+
+function TicketInput({ onSubmit, label }) {
   const [ticketState, setTicketState] = useState([
     {
       ticketName: "",
@@ -62,7 +126,7 @@ export default function TicketInput({ onSubmit, label }) {
   )
 }
 
-export function CreateTicket() {
+function OldCreateTicket() {
   const [ticket, setTicket] = useState(null)
 
   const handleSubmit = (submittedTicket) => setTicket(submittedTicket)
