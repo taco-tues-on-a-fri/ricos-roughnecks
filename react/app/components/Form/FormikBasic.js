@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 export default function FormikBasic() {
   return (
@@ -15,7 +16,7 @@ export default function FormikBasic() {
           } else if (
             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
           ) {
-            errors.email = 'Invalid email address';
+            errors.email = '--Invalid email address--';
           }
           return errors;
         }}
@@ -37,32 +38,34 @@ export default function FormikBasic() {
           /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit}>
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Email {errors.email && touched.email && errors.email}</Form.Label>
             <Form.Control
               as="input"
               type="email"
               name="email"
               placeholder="Enter Email"
+              autoComplete="off"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
             />
 
-            {errors.email && touched.email && errors.email}
-            
+
+            <Form.Label>Password {errors.password && touched.password && errors.password}</Form.Label>
             <Form.Control
               as="input"
               type="password"
               name="password"
               placeholder="Enter Password"
+              autoComplete="off"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
             />
-            {errors.password && touched.password && errors.password}
-            <button type="submit" disabled={isSubmitting}>
+            
+            <Button type="submit" disabled={isSubmitting}>
               Submit
-            </button>
+            </Button>
           </Form>
         )}
       </Formik>
