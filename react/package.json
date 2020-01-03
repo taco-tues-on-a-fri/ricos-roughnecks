@@ -35,6 +35,7 @@
     "bootstrap": "^4.4.1",
     "bootswatch": "^4.4.1",
     "dotenv": "^8.2.0",
+    "formik": "^2.1.1",
     "jquery": "^3.4.1",
     "match-sorter": "^4.0.2",
     "moment": "^2.24.0",
@@ -48,7 +49,8 @@
     "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",
     "react-table": "^7.0.0-rc.15",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "yup": "^0.28.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
