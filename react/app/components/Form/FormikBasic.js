@@ -34,6 +34,7 @@ export default function FormikBasic() {
           handleChange,
           handleBlur,
           handleSubmit,
+          handleReset,
           isSubmitting,
           /* and other goodies */
         }) => (
@@ -65,6 +66,9 @@ export default function FormikBasic() {
             
             <Button type="submit" disabled={isSubmitting}>
               Submit
+            </Button>
+            <Button type="submit" onClick={handleReset} disabled={isSubmitting}>
+              Reset
             </Button>
           </Form>
         )}
