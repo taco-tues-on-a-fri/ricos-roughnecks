@@ -6,6 +6,23 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 
+const validate = values => {
+  const errors = {};
+  if (!values.ticketName) {
+    errors.ticketName = 'Required'
+  } else if (values.ticketName.length > 64) {
+    errors.ticketName = 'Must be 64 characters or less'
+  }
+
+  if (!values.ticketDescription) {
+    errors.ticketDescription = 'Required'
+  } else if (values.ticketDescription.length > 64) {
+    errors.ticketDescription = 'Must be 64 characters or less'
+  }
+
+  return errors
+}
+
 
 const TicketForm = () => {
   const formik = useFormik({
@@ -18,6 +35,7 @@ const TicketForm = () => {
       ticketPriority: "",
       ticketStatus: "",
     },
+    validate,
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2))
     },
@@ -28,17 +46,20 @@ const TicketForm = () => {
       <Form onSubmit={formik.handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} controlId="ticketName">
-            <Form.Label>Ticket Name</Form.Label>
+            <Form.Label>Ticket Name </Form.Label>
             <Form.Control 
               as="input" 
               placeholder="Enter Ticket Name"
               type="text"
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               value={formik.values.ticketName}
             />
             <Form.Text className="text-muted">
               Please only use serious names.
             </Form.Text>
+            {formik.touched.ticketName && formik.errors.ticketName ? (
+              <div>{formik.errors.ticketName}</div>) : null}
           </Form.Group>
 
           <Form.Group as={Col} controlId="ticketType">
@@ -46,6 +67,7 @@ const TicketForm = () => {
             <Form.Control 
               as="select"
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               value={formik.values.ticketType}
             >
               <option>Choose...</option>
@@ -64,8 +86,11 @@ const TicketForm = () => {
             as="textarea" 
             placeholder="Enter Ticket Description"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.ticketDescription}
           />
+          {formik.touched.ticketDescription && formik.errors.ticketDescription ? (
+            <div>{formik.errors.ticketDescription}</div>) : null}
         </Form.Group>
 
         <Form.Row>
@@ -74,6 +99,7 @@ const TicketForm = () => {
             <Form.Control 
               as="select"
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               value={formik.values.project}
             >
               <option>Choose...</option>
@@ -88,6 +114,7 @@ const TicketForm = () => {
             <Form.Control 
               as="select"
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               value={formik.values.project}
             >
               <option>Choose...</option>
@@ -103,6 +130,7 @@ const TicketForm = () => {
             <Form.Control 
               as="select"
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               value={formik.values.ticketPriority}
             >
               <option>Choose...</option>
@@ -119,6 +147,7 @@ const TicketForm = () => {
             <Form.Control 
               as="select"
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               value={formik.values.ticketStatus}
             >
               <option>Choose...</option>
