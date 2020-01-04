@@ -14,6 +14,12 @@ const validate = values => {
     errors.ticketName = 'Must be 64 characters or less'
   }
 
+  if (!values.ticketType) {
+    errors.ticketType = 'Required'
+  } else if (values.ticketType === 'Choose...') {
+    errors.ticketType = 'A selection must be made.'
+  }
+
   if (!values.ticketDescription) {
     errors.ticketDescription = 'Required'
   } else if (values.ticketDescription.length > 64) {
@@ -54,12 +60,14 @@ const TicketForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.ticketName}
+              isInvalid={formik.touched.ticketName && formik.errors.ticketName}
             />
             <Form.Text className="text-muted">
               Please only use serious names.
             </Form.Text>
-            {formik.touched.ticketName && formik.errors.ticketName ? (
-              <div>{formik.errors.ticketName}</div>) : null}
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.ticketName}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="ticketType">
@@ -77,6 +85,8 @@ const TicketForm = () => {
               <option>task</option>
               <option>custom issue</option>
             </Form.Control>
+            {formik.touched.ticketType && formik.errors.ticketType ? (
+              <div>{formik.errors.ticketType}</div>) : null}
           </Form.Group>
         </Form.Row>
         
