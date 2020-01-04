@@ -26,6 +26,30 @@ const validate = values => {
     errors.ticketDescription = 'Must be 64 characters or less'
   }
 
+  if (!values.project) {
+    errors.project = 'Required'
+  } else if (values.project === 'Choose...') {
+    errors.project = 'A selection must be made.'
+  }
+
+  if (!values.developer) {
+    errors.developer = 'Required'
+  } else if (values.developer === 'Choose...') {
+    errors.developer = 'A selection must be made.'
+  }
+  
+  if (!values.ticketPriority) {
+    errors.ticketPriority = 'Required'
+  } else if (values.ticketPriority === 'Choose...') {
+    errors.ticketPriority = 'A selection must be made.'
+  }
+  
+  if (!values.ticketStatus) {
+    errors.ticketStatus = 'Required'
+  } else if (values.ticketStatus === 'Choose...') {
+    errors.ticketStatus = 'A selection must be made.'
+  }
+
   return errors
 }
 
@@ -77,6 +101,7 @@ const TicketForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.ticketType}
+              isInvalid={formik.touched.ticketType && formik.errors.ticketType}
             >
               <option>Choose...</option>
               <option>bug</option>
@@ -85,8 +110,9 @@ const TicketForm = () => {
               <option>task</option>
               <option>custom issue</option>
             </Form.Control>
-            {formik.touched.ticketType && formik.errors.ticketType ? (
-              <div>{formik.errors.ticketType}</div>) : null}
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.ticketType}
+            </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         
@@ -97,10 +123,12 @@ const TicketForm = () => {
             placeholder="Enter Ticket Description"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.ticketDescription}
+            value={formik.values.ticketDescription} 
+            isInvalid={formik.touched.ticketDescription && formik.errors.ticketDescription}
           />
-          {formik.touched.ticketDescription && formik.errors.ticketDescription ? (
-            <div>{formik.errors.ticketDescription}</div>) : null}
+          <Form.Control.Feedback type="invalid">
+            {formik.errors.ticketDescription}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Row>
@@ -111,12 +139,16 @@ const TicketForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.project}
+              isInvalid={formik.touched.project && formik.errors.project}
             >
               <option>Choose...</option>
               <option>Bug Tracker</option>
               <option>Random Name Generator</option>
               <option>Scraping Reddit</option>
             </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.project}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="developer">
@@ -125,12 +157,16 @@ const TicketForm = () => {
               as="select"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.project}
+              value={formik.values.developer}
+              isInvalid={formik.touched.developer && formik.errors.developer}
             >
               <option>Choose...</option>
               <option>taco-tues-on-a-fri</option>
               <option>willstall</option>
             </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.developer}
+            </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         
@@ -142,6 +178,7 @@ const TicketForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.ticketPriority}
+              isInvalid={formik.touched.ticketPriority && formik.errors.ticketPriority}
             >
               <option>Choose...</option>
               <option>blocker</option>
@@ -150,6 +187,9 @@ const TicketForm = () => {
               <option>minor</option>
               <option>trivial</option>
             </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.ticketPriority}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="ticketStatus">
@@ -159,6 +199,7 @@ const TicketForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.ticketStatus}
+              isInvalid={formik.touched.ticketStatus && formik.errors.ticketStatus}
             >
               <option>Choose...</option>
               <option>open</option>
@@ -167,6 +208,9 @@ const TicketForm = () => {
               <option>resolved</option>
               <option>closed</option>
             </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.ticketStatus}
+            </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         <Button type="submit">Submit</Button>
