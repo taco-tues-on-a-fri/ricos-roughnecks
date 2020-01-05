@@ -7,6 +7,9 @@
 //| 12-23-19: TODO: need to change express.static to handle the dist folder
 //| 12-23-19: TODO:     how are .env variables handled?
 //| 12-23-19: TODO: dist build fails from erroneously included idea files.
+//| 01-05-20: Reconfigured how the DB is mounted and how routes are defined.
+//| 01-05-20: commented out old format, leaving for now, but will remove when refactoring project
+
 
 
 
@@ -21,23 +24,26 @@ import compression from 'compression'
 import rateLimit from 'express-rate-limit'
 import { body, check } from 'express-validator'
 import util from 'util'
+import mountRoutes from './routes/mount'
+
 // import cookieParser from 'cookie-parser';
 
 
-//| setup postgres
+//| setup postgres | Removed 01-04-2020 - didn't appear to be connected to anything
 //|------------------------------------------------------------------------
-import { pool } from './config/index'
+// import { pool } from './config/index'
 
 
-//| setup routes
+//| setup routes | Removed 01-04-2020 - using pg documentation recommendation
 //|------------------------------------------------------------------------
-import index_router from './routes/index'
-import api_router from './routes/api'
+// import index_router from './routes/index'
+// import api_router from './routes/api'
+
+
 
 //| instantiate express
 //|------------------------------------------------------------------------
 const app = express();
-
 
 
 //| setup morgan w/ winston logging
@@ -48,6 +54,9 @@ app.use(morgan('dev', {
   }
 }));
 
+//| mount routes - needs to come after morgan in order for logging to work
+//|------------------------------------------------------------------------
+mountRoutes(app)
 
 //| define middleware
 //|------------------------------------------------------------------------
@@ -69,10 +78,10 @@ const limiter = rateLimit({
 app.use(limiter)
 
 
-//| define routes
+//| define routes | Removed 01-04-2020 - lives inside of routes/mount.js now 
 //|------------------------------------------------------------------------
-app.use('/', index_router);
-app.use('/api', api_router);
+// app.use('/', index_router);
+// app.use('/api', api_router);
 
 app.get('/status', (req, res) => {
   res.status(200).end()
