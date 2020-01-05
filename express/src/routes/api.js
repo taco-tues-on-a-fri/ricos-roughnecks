@@ -6,6 +6,7 @@ import { Request, Response, NextFunction } from 'express';
 import Router from 'express-promise-router'
 import db from '../loaders/db'
 const router = new Router()
+import queryString from 'query-string'
 
 //| TODO: phase this controller out.
 import { index, query_person, query_project, query_ticket, create_ticket_get, create_ticket_post} from '../controllers/api_controller';
@@ -21,6 +22,23 @@ router.get('/', index);
 router.get('/:id', async (req, res) => {
   const { id } = req.params
   const {rows } = await db.query(`SELECT * FROM ${id}`)
+  res.json(rows)
+});
+
+//| POST | post new ticket
+//|------------------------------------------------------------------------
+router.post('ticket/:id', async (req, res) => {
+  const { 
+    ticketName,
+    ticketType,
+    ticketDescription,
+    project,
+    developer,
+    ticketPriority,
+    ticketStatus
+  } = queryString.parse(req.params.search)
+  // const { rows } = await db.query(`INSERT INTO ticket(ticketName, ticketType, ticketDescription, project, developer, ticketPriority, ticketStatus) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`
+  const { rows } = await db.query(`INSERT INTO ticket(ticketName, ticketType, ticketDescription, project, developer, ticketPriority, ticketStatus) VALUES(${ticketName, ticketType, ticketDescription, project, developer, ticketPriority, ticketStatus}) RETURNING *`
   res.json(rows)
 });
 
