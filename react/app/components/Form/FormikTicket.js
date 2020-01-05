@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import { Link } from 'react-router-dom'
 
 const validate = values => {
   const errors = {};
@@ -67,6 +68,13 @@ const TicketForm = () => {
     },
     validate,
     onSubmit: values => {
+      <Link
+        to={{
+          pathname: "/api/ticket/",
+          search: `?ticketName=${values.ticketName}&ticketType=${values.ticketType}&ticketDescription=${values.ticketDescription}&project=${values.project}&developer=${values.developer}&ticketPriority=${values.ticketPriority}&ticketStatus=${values.ticketStatus}`
+        }}
+      />
+      
       alert(JSON.stringify(values, null, 2))
     },
   })
@@ -220,3 +228,12 @@ const TicketForm = () => {
 }
 
 export default TicketForm
+
+
+// ticketName=${values.ticketName}&
+// ticketType=${values.ticketType}&
+// ticketDescription=${values.ticketDescription}&
+// project=${values.project}&
+// developer=${values.developer}&
+// ticketPriority=${values.ticketPriority}&
+// ticketStatus=${values.ticketStatus}
