@@ -17,7 +17,6 @@ function TicketForm({ onSubmit, label }) {
   }
 
   const handleChange = (event) => setTicketInput(event.target.value)
-  // const theme = React.useContext(ThemeContext)
 
   return(
     <Form>
