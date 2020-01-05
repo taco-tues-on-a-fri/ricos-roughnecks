@@ -27,6 +27,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path='/' component={FormikTicket} />
+          <Route path='/api/ticket/' component={TableNav} />
         </Switch>
       </Router>
       // <TableNav />
