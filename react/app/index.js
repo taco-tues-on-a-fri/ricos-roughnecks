@@ -7,6 +7,9 @@ import TableNav from './components/Table/TableNav'
 import './index.css'
 import BasicTable from './components/Table/BasicTable'
 import CreateTicket from './components/Form/CreateTicket'
+import BasicForm from './components/Form/BasicForm'
+import FormikBasic from './components/Form/FormikBasic'
+import FormikTicket from './components/Form/FormikTicket'
 
 // import Container from '@material-ui/core/Container';
 // import StickyHeadTable from './components/Table/Table'
@@ -20,10 +23,13 @@ import CreateTicket from './components/Form/CreateTicket'
 class App extends React.Component {
   render() {
     return (
+      <FormikTicket />
+      // <FormikBasic />
+      // <BasicForm />
       // <BasicTable />
       // <TableNav />
-      <CreateTicket />
-      //<TestTable />
+      // <CreateTicket />
+      // <TestTable />
       // <QueryTable />
       // <DynamicTable />
       // <ApiResponse />
