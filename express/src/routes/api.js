@@ -23,7 +23,8 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params
   const {rows } = await db.query(`SELECT * FROM ${id}`)
   // res.send(rows[0])
-  res.status(200).json(rows)
+  // res.status(200).json(rows)
+  res.json(rows)
 });
 
 
