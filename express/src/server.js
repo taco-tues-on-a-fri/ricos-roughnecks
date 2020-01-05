@@ -9,7 +9,9 @@
 //| 12-23-19: TODO: dist build fails from erroneously included idea files.
 //| 01-05-20: Reconfigured how the DB is mounted and how routes are defined.
 //| 01-05-20: commented out old format, leaving for now, but will remove when refactoring project
-
+//|------------------------------------------------------------------------
+//| 01-05-20:  New DB mounting works, changed order of middleware as result
+//|------------------------------------------------------------------------
 
 
 
