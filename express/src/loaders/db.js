@@ -6,6 +6,8 @@
 //| 12-22-19: TODO: finish configuring and implement exports
 //|------------------------------------------------------------------------
 //| 01-04-20: Attempting to switch over to the loading configuration described in pg's documentation for express
+//| 01-05-20: New configuration working. 
+//| 01-05-20: TODO: change module.exports to new syntax
 
 import { Pool } from 'pg'
 import dotenv from 'dotenv'
