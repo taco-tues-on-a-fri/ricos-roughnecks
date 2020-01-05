@@ -1,31 +1,34 @@
-//| 01-04-20: Attempting to switch over to the loading configuration described in pg's documentation for express
-//| 01-04-20: building out dynamic query on ticket path
-//| 01-04-20:   decided to try and make a dynamic general query of any of the 3 tables
-//| 01-04-20:    using only 1 dynamic function
-
-
+//| 01-04-20: Switched to the loading config described in node-postgres' express documentation
+//| 01-05-20: Dynamic general query of for the 3 main tables built
 //|------------------------------------------------------------------------
+
 import { Request, Response, NextFunction } from 'express';
 import Router from 'express-promise-router'
 import db from '../loaders/db'
-import { index, query_person, query_project, query_ticket, create_ticket_get, create_ticket_post} from '../controllers/api_controller';
 const router = new Router()
+
+//| TODO: phase this controller out.
+import { index, query_person, query_project, query_ticket, create_ticket_get, create_ticket_post} from '../controllers/api_controller';
+
 
 //| GET | index
 //|------------------------------------------------------------------------
 router.get('/', index);
 
-// router.get('/person', query_person);
-// router.get('/project', query_project);
-// router.get('/ticket', query_ticket);
 
+//| GET | Select all rows from specified table through params
+//|------------------------------------------------------------------------
 router.get('/:id', async (req, res) => {
   const { id } = req.params
   const {rows } = await db.query(`SELECT * FROM ${id}`)
-  // res.send(rows[0])
-  // res.status(200).json(rows)
   res.json(rows)
 });
+
+
+export default router
+
+
+
 
 
 // router.get('/:id', async (req, res) => {
@@ -34,7 +37,26 @@ router.get('/:id', async (req, res) => {
 //   res.send(rows[0])
 // })
 
-export default router
+
+
+
+
+
+
+
+//| Refactored after dynamic query function built, old code that was replaced below
+//|------------------------------------------------------------------------
+
+// router.get('/person', query_person);
+// router.get('/project', query_project);
+// router.get('/ticket', query_ticket);
+
+
+
+
+//| 
+//|------------------------------------------------------------------------
+//|------------------------------------------------------------------------
 
 
 
