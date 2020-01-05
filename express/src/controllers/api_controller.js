@@ -46,6 +46,19 @@ export function query_ticket(req, res, next) {
   })
 };
 
+// router.get('/ticket/create', create_ticket_get);
+// router.post('/ticket/create', create_ticket_post);
+// //| POST ticket query
+// //|------------------------------------------------------------------------
+// export function query_ticket(req, res, next) {
+//   pool.query('SELECT * FROM ticket', (error, results) => {
+//     if (error) {
+//       throw error
+//     }
+//     res.status(200).json(results.rows)
+//   })
+// };
+
 
 
 
