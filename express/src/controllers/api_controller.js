@@ -1,3 +1,7 @@
+//| 01-05-20: Thinking about phasing out this controller and keeping query functions
+//| 01-05-20:   inside the api router.
+//|------------------------------------------------------------------------
+
 require('express-async-errors');
 import { pool } from '../loaders/db'
 
