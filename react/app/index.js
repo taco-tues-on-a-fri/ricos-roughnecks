@@ -10,6 +10,7 @@ import CreateTicket from './components/Form/CreateTicket'
 import BasicForm from './components/Form/BasicForm'
 import FormikBasic from './components/Form/FormikBasic'
 import FormikTicket from './components/Form/FormikTicket'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 // import Container from '@material-ui/core/Container';
 // import StickyHeadTable from './components/Table/Table'
@@ -23,11 +24,15 @@ import FormikTicket from './components/Form/FormikTicket'
 class App extends React.Component {
   render() {
     return (
-      <FormikTicket />
+      <Router>
+        <Switch>
+          <Route exact path='/' component={FormikTicket} />
+        </Switch>
+      </Router>
+      // <TableNav />
       // <FormikBasic />
       // <BasicForm />
       // <BasicTable />
-      // <TableNav />
       // <CreateTicket />
       // <TestTable />
       // <QueryTable />
