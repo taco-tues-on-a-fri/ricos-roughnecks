@@ -54,7 +54,7 @@ export default function TableNav () {
     if (fetchedQueries.current.includes(selectedQuery) === false) {
       fetchedQueries.current.push(selectedQuery)
 
-      fetchQuery(selectedQuery)
+      fetchQuery(selectedQuery.toLocaleLowerCase())
         .then((query) => dispatch({ type: 'success', selectedQuery, query }))
         .catch((error) => dispatch({ type: error, error }))
     }
