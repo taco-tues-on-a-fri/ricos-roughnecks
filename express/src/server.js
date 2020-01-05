@@ -46,6 +46,11 @@ import mountRoutes from './routes/mount'
 const app = express();
 
 
+//| setup coors before DB mounting.
+//|------------------------------------------------------------------------
+app.use(cors()) //TODO configure for production - see area at bottom
+
+
 //| setup morgan w/ winston logging
 //|------------------------------------------------------------------------
 app.use(morgan('dev', { 
@@ -62,7 +67,7 @@ mountRoutes(app)
 //|------------------------------------------------------------------------
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors()) //TODO configure for production - see area at bottom
+
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, './public')));
 app.use(compression())
