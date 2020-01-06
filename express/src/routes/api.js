@@ -38,7 +38,7 @@ router.post('ticket/:id', async (req, res) => {
     ticketStatus
   } = queryString.parse(req.params.search)
   // const { rows } = await db.query(`INSERT INTO ticket(ticketName, ticketType, ticketDescription, project, developer, ticketPriority, ticketStatus) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`
-  const { rows } = await db.query(`INSERT INTO ticket(ticketName, ticketType, ticketDescription, project, developer, ticketPriority, ticketStatus) VALUES(${ticketName, ticketType, ticketDescription, project, developer, ticketPriority, ticketStatus}) RETURNING *`
+  const { rows } = await db.query(`INSERT INTO ticket(ticketName, ticketType, ticketDescription, project, developer, ticketPriority, ticketStatus) VALUES(${ticketName, ticketType, ticketDescription, project, developer, ticketPriority, ticketStatus}) RETURNING *`)
   res.json(rows)
 });
 
