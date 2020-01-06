@@ -1,3 +1,6 @@
+//| working first implementation of 
+//| Using the Formik component instead of useFormik
+//|------------------------------------------------------------------------
 import React, { useState } from 'react'
 import { Formik, useFormik } from 'formik'
 import Container from 'react-bootstrap/Container'
@@ -6,6 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { LinkContainer } from 'react-router-bootstrap'
+import { Redirect } from 'react-router-dom'
 
 const validate = values => {
   const errors = {};
@@ -55,6 +59,15 @@ const validate = values => {
 }
 
 const TicketForm = () => {
+  const [toNext, setToNext] = useState(false)
+  const [formValues, setFormValues] = useState(null)
+  
+  const handleSubmit = values => {
+    setFormValues(values)
+    alert(JSON.stringify(values, null, 2));
+    setToNext(true)
+  }
+
   return (
     <Formik
       initialValues={{
@@ -66,12 +79,13 @@ const TicketForm = () => {
         ticketPriority: "",
         ticketStatus: "",
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400)
-      }}
+      onSubmit={(values) => handleSubmit(values)}
+      // onSubmit={(values, { setSubmitting }) => {
+      //   setTimeout(() => {
+      //     alert(JSON.stringify(values, null, 2));
+      //     setSubmitting(false);
+      //   }, 400)
+      // }}
     >
       {formik => (
         <Container>
@@ -216,6 +230,7 @@ const TicketForm = () => {
               </Form.Group>
             </Form.Row>
             <Button type="submit">Submit</Button>
+            {toNext ? <Redirect to="/redirected" /> : null}
           </Form>
         </Container>
       )}
