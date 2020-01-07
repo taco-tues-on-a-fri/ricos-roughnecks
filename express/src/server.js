@@ -61,9 +61,11 @@ app.use(morgan('dev', {
   }
 }));
 
+
 //| mount routes - needs to come after morgan in order for logging to work
 //|------------------------------------------------------------------------
 mountRoutes(app)
+
 
 //| define middleware
 //|------------------------------------------------------------------------
@@ -83,6 +85,7 @@ const limiter = rateLimit({
 })
 
 app.use(limiter)
+
 
 
 //| define routes | Removed 01-04-2020 - lives inside of routes/mount.js now 
