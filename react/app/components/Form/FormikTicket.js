@@ -1,5 +1,5 @@
-//| working first implementation of 
-//| Using the Formik component instead of useFormik
+//| 01-07-20: Post is now working, and all the table column names are correct
+//| 01-07-20: There is a problem with the construction of the insert query function
 //|------------------------------------------------------------------------
 import React, { useState } from 'react'
 import { Formik, useFormik } from 'formik'
@@ -10,49 +10,50 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Redirect } from 'react-router-dom'
+import { insertQuery } from '../../../utils/api'
 
 const validate = values => {
   const errors = {};
-  if (!values.ticketName) {
-    errors.ticketName = 'Required'
-  } else if (values.ticketName.length > 64) {
-    errors.ticketName = 'Must be 64 characters or less'
+  if (!values.ticket_name) {
+    errors.ticket_name = 'Required'
+  } else if (values.ticket_name.length > 64) {
+    errors.ticket_name = 'Must be 64 characters or less'
   }
 
-  if (!values.ticketType) {
-    errors.ticketType = 'Required'
-  } else if (values.ticketType === 'Choose...') {
-    errors.ticketType = 'A selection must be made.'
+  if (!values.ticket_type) {
+    errors.ticket_type = 'Required'
+  } else if (values.ticket_type === 'Choose...') {
+    errors.ticket_type = 'A selection must be made.'
   }
 
-  if (!values.ticketDescription) {
-    errors.ticketDescription = 'Required'
-  } else if (values.ticketDescription.length > 64) {
-    errors.ticketDescription = 'Must be 64 characters or less'
+  if (!values.ticket_description) {
+    errors.ticket_description = 'Required'
+  } else if (values.ticket_description.length > 64) {
+    errors.ticket_description = 'Must be 64 characters or less'
   }
 
-  if (!values.project) {
-    errors.project = 'Required'
-  } else if (values.project === 'Choose...') {
-    errors.project = 'A selection must be made.'
+  if (!values.ticket_project) {
+    errors.ticket_project = 'Required'
+  } else if (values.ticket_project === 'Choose...') {
+    errors.ticket_project = 'A selection must be made.'
   }
 
-  if (!values.developer) {
-    errors.developer = 'Required'
-  } else if (values.developer === 'Choose...') {
-    errors.developer = 'A selection must be made.'
+  if (!values.assigned_developer) {
+    errors.assigned_developer = 'Required'
+  } else if (values.assigned_developer === 'Choose...') {
+    errors.assigned_developer = 'A selection must be made.'
   }
   
-  if (!values.ticketPriority) {
-    errors.ticketPriority = 'Required'
-  } else if (values.ticketPriority === 'Choose...') {
-    errors.ticketPriority = 'A selection must be made.'
+  if (!values.ticket_priority) {
+    errors.ticket_priority = 'Required'
+  } else if (values.ticket_priority === 'Choose...') {
+    errors.ticket_priority = 'A selection must be made.'
   }
   
-  if (!values.ticketStatus) {
-    errors.ticketStatus = 'Required'
-  } else if (values.ticketStatus === 'Choose...') {
-    errors.ticketStatus = 'A selection must be made.'
+  if (!values.ticket_status) {
+    errors.ticket_status = 'Required'
+  } else if (values.ticket_status === 'Choose...') {
+    errors.ticket_status = 'A selection must be made.'
   }
 
   return errors
@@ -64,6 +65,7 @@ const TicketForm = () => {
   
   const handleSubmit = values => {
     setFormValues(values)
+    insertQuery(values)
     alert(JSON.stringify(values, null, 2));
     setToNext(true)
   }
@@ -71,13 +73,13 @@ const TicketForm = () => {
   return (
     <Formik
       initialValues={{
-        ticketName: "",
-        ticketType: "",
-        ticketDescription: "",
-        project: "",
-        developer: "",
-        ticketPriority: "",
-        ticketStatus: "",
+        ticket_name: "",
+        ticket_type: "",
+        ticket_description: "",
+        ticket_project: "",
+        assigned_developer: "",
+        ticket_priority: "",
+        ticket_status: "",
       }}
       onSubmit={(values) => handleSubmit(values)}
       // onSubmit={(values, { setSubmitting }) => {
@@ -91,7 +93,7 @@ const TicketForm = () => {
         <Container>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Row>
-              <Form.Group as={Col} controlId="ticketName">
+              <Form.Group as={Col} controlId="ticket_name">
                 <Form.Label>Ticket Name </Form.Label>
                 <Form.Control 
                   as="input" 
@@ -99,25 +101,25 @@ const TicketForm = () => {
                   type="text"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.ticketName}
-                  isInvalid={formik.touched.ticketName && formik.errors.ticketName}
+                  value={formik.values.ticket_name}
+                  isInvalid={formik.touched.ticket_name && formik.errors.ticket_name}
                 />
                 <Form.Text className="text-muted">
                   Please only use serious names.
                 </Form.Text>
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.ticketName}
+                  {formik.errors.ticket_name}
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <Form.Group as={Col} controlId="ticketType">
+              <Form.Group as={Col} controlId="ticket_type">
                 <Form.Label>Ticket Type</Form.Label>
                 <Form.Control 
                   as="select"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.ticketType}
-                  isInvalid={formik.touched.ticketType && formik.errors.ticketType}
+                  value={formik.values.ticket_type}
+                  isInvalid={formik.touched.ticket_type && formik.errors.ticket_type}
                 >
                   <option>Choose...</option>
                   <option>bug</option>
@@ -127,35 +129,35 @@ const TicketForm = () => {
                   <option>custom issue</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.ticketType}
+                  {formik.errors.ticket_type}
                 </Form.Control.Feedback>
               </Form.Group>
             </Form.Row>
             
-            <Form.Group controlId="ticketDescription">
+            <Form.Group controlId="ticket_description">
               <Form.Label>Description</Form.Label>
               <Form.Control 
                 as="textarea" 
                 placeholder="Enter Ticket Description"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.ticketDescription} 
-                isInvalid={formik.touched.ticketDescription && formik.errors.ticketDescription}
+                value={formik.values.ticket_description} 
+                isInvalid={formik.touched.ticket_description && formik.errors.ticket_description}
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.ticketDescription}
+                {formik.errors.ticket_description}
               </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Row>
-              <Form.Group as={Col} controlId="project">
+              <Form.Group as={Col} controlId="ticket_project">
                 <Form.Label>Project</Form.Label>
                 <Form.Control 
                   as="select"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.project}
-                  isInvalid={formik.touched.project && formik.errors.project}
+                  value={formik.values.ticket_project}
+                  isInvalid={formik.touched.ticket_project && formik.errors.ticket_project}
                 >
                   <option>Choose...</option>
                   <option>Bug Tracker</option>
@@ -163,38 +165,38 @@ const TicketForm = () => {
                   <option>Scraping Reddit</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.project}
+                  {formik.errors.ticket_project}
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <Form.Group as={Col} controlId="developer">
+              <Form.Group as={Col} controlId="assigned_developer">
                 <Form.Label>Assigned Developer</Form.Label>
                 <Form.Control 
                   as="select"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.developer}
-                  isInvalid={formik.touched.developer && formik.errors.developer}
+                  value={formik.values.assigned_developer}
+                  isInvalid={formik.touched.assigned_developer && formik.errors.assigned_developer}
                 >
                   <option>Choose...</option>
                   <option>taco-tues-on-a-fri</option>
                   <option>willstall</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.developer}
+                  {formik.errors.assigned_developer}
                 </Form.Control.Feedback>
               </Form.Group>
             </Form.Row>
             
             <Form.Row>
-              <Form.Group as={Col} controlId="ticketPriority">
+              <Form.Group as={Col} controlId="ticket_priority">
                 <Form.Label>Ticket Priority</Form.Label>
                 <Form.Control 
                   as="select"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.ticketPriority}
-                  isInvalid={formik.touched.ticketPriority && formik.errors.ticketPriority}
+                  value={formik.values.ticket_priority}
+                  isInvalid={formik.touched.ticket_priority && formik.errors.ticket_priority}
                 >
                   <option>Choose...</option>
                   <option>blocker</option>
@@ -204,18 +206,18 @@ const TicketForm = () => {
                   <option>trivial</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.ticketPriority}
+                  {formik.errors.ticket_priority}
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <Form.Group as={Col} controlId="ticketStatus">
+              <Form.Group as={Col} controlId="ticket_status">
                 <Form.Label>Ticket Status</Form.Label>
                 <Form.Control 
                   as="select"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.ticketStatus}
-                  isInvalid={formik.touched.ticketStatus && formik.errors.ticketStatus}
+                  value={formik.values.ticket_status}
+                  isInvalid={formik.touched.ticket_status && formik.errors.ticket_status}
                 >
                   <option>Choose...</option>
                   <option>open</option>
@@ -225,12 +227,12 @@ const TicketForm = () => {
                   <option>closed</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.ticketStatus}
+                  {formik.errors.ticket_status}
                 </Form.Control.Feedback>
               </Form.Group>
             </Form.Row>
             <Button type="submit">Submit</Button>
-            {toNext ? <Redirect to="/redirected" /> : null}
+            {toNext ? <Redirect to="/tablenav" /> : null}
           </Form>
         </Container>
       )}
