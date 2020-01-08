@@ -12,6 +12,7 @@
 //|------------------------------------------------------------------------
 //| 01-05-20:  New DB mounting works, changed order of middleware as result
 //|------------------------------------------------------------------------
+//| 01-08-20:  Moved express.json and urlencoded above route definition to solve undefined POST issue.
 
 
 
@@ -62,15 +63,16 @@ app.use(morgan('dev', {
 }));
 
 
+//| load middleware for json and urlencoded bodies - must come before route definitions
+//|------------------------------------------------------------------------
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 //| mount routes - needs to come after morgan in order for logging to work
 //|------------------------------------------------------------------------
 mountRoutes(app)
 
-
-//| define middleware
-//|------------------------------------------------------------------------
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, './public')));
