@@ -34,23 +34,45 @@ router.get('/:id', async (req, res) => {
 
 //| POST | v.01 post new ticket
 //|------------------------------------------------------------------------
+// router.post('/ticket', async (req, res) => {
+//   console.log(util.inspect(queryString.parse(req.params.search)))
+//   const { 
+//     ticket_name,
+//     ticket_type,
+//     ticket_description,
+//     ticket_project,
+//     assigned_developer,
+//     ticket_priority,
+//     ticket_status
+//   } = queryString.parse(req.params.search)
+//   // const { rows } = await db.query(`INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`
+//   const { rows } = await db.query(`INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES(${ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status}) RETURNING *`)
+//   .then(res => res.json(rows))
+//   .catch(err => console.error('error executing query', err.stack))
+//   // res.json(rows)
+// });
+
+
 router.post('/ticket', async (req, res) => {
-  console.log(util.inspect(queryString.parse(req.params.search)))
-  const { 
-    ticket_name,
-    ticket_type,
-    ticket_description,
-    ticket_project,
-    assigned_developer,
-    ticket_priority,
-    ticket_status
-  } = queryString.parse(req.params.search)
-  // const { rows } = await db.query(`INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`
-  const { rows } = await db.query(`INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES(${ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status}) RETURNING *`)
-  .then(res => res.json(rows))
-  .catch(err => console.error('error executing query', err.stack))
-  // res.json(rows)
-});
+  // console.log('req:')
+  // console.log(util.inspect(req))
+  // console.log('req.params:')
+  // console.log(util.inspect(req.params))
+  console.log('req.body:')
+  console.log(util.inspect(req.body))
+  const text = 'INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
+  const values = Object.values(queryString.parse(req.body.search))
+  console.log(util.inspect(values))
+  try {
+    const res = await db.query(text, values)
+    console.log(res.rows[0])
+  } catch (err) {
+    console.log(err.stack)
+  }
+  
+
+})
+
 
 
 export default router
