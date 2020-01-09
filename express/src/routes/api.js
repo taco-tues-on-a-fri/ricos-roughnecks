@@ -32,7 +32,53 @@ router.get('/:id', async (req, res) => {
   res.json(rows)
 });
 
-//| POST | v.01 post new ticket
+//| 01-08-20: v.06 
+//| 01-08-20: Works!
+//|------------------------------------------------------------------------
+router.post('/ticket', async (req, res) => {
+  console.log('req.body:')
+  console.log(util.inspect(req.body))
+  // const values = Object.values(queryString.parse(req.body))
+  const values = Object.values(req.body)
+  console.log('values:')
+  console.log(util.inspect(values))
+  const text = 'INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
+  try {
+    const res = await db.query(text, values)
+    console.log(res.rows[0])
+  } catch (err) {
+    console.log(err.stack)
+  }
+});
+
+
+//| 01-08-20: v.05 building off of v.02
+//| 01-08-20: 404 - Not Found - /api/ticket/?assigned_developer=taco-tues-on-a-fri&ticket_description=More%2520swuaaa&ticket_name=The%2520squiggle&ticket_priority=blocker&ticket_project=Bug%2520Tracker&ticket_status=open&ticket_type=improvement - POST - ::1
+//|------------------------------------------------------------------------
+// router.post('/ticket/:id', async (req, res) => {
+//   console.log(util.inspect(queryString.parse(req.params.search)))
+//   const { 
+//     ticket_name,
+//     ticket_type,
+//     ticket_description,
+//     ticket_project,
+//     assigned_developer,
+//     ticket_priority,
+//     ticket_status
+//   } = queryString.parse(req.params.search)
+//   // const { rows } = await db.query(`INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`
+//   const { rows } = await db.query(`INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES(${ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status}) RETURNING *`)
+//   .then(res => res.json(rows))
+//   .catch(err => console.error('error executing query', err.stack))
+//   // res.json(rows)
+// });
+
+
+
+
+
+//| 01-08-20: v.04 building off of v.01
+//| 01-08-20: ERROR: Cannot read property 'rows' of undefined 
 //|------------------------------------------------------------------------
 // router.post('/ticket', async (req, res) => {
 //   console.log(util.inspect(queryString.parse(req.params.search)))
@@ -53,31 +99,25 @@ router.get('/:id', async (req, res) => {
 // });
 
 
-router.post('/ticket', async (req, res) => {
-  // console.log('req:')
-  // console.log(util.inspect(req))
-  // console.log('req.params:')
-  // console.log(util.inspect(req.params))
-  console.log('req.body:')
-  console.log(util.inspect(req.body))
-  const text = 'INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
-  const values = Object.values(queryString.parse(req.body.search))
-  console.log(util.inspect(values))
-  try {
-    const res = await db.query(text, values)
-    console.log(res.rows[0])
-  } catch (err) {
-    console.log(err.stack)
-  }
-  
-
-})
-
-
-
-export default router
-
-
+//| 01-07-20: v.03 post new ticket
+//|------------------------------------------------------------------------
+// router.post('/ticket', async (req, res) => {
+//   // console.log('req:')
+//   // console.log(util.inspect(req))
+//   // console.log('req.params:')
+//   // console.log(util.inspect(req.params))
+//   console.log('req.body:')
+//   console.log(util.inspect(req.body))
+//   const text = 'INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
+//   const values = Object.values(queryString.parse(req.body.search))
+//   console.log(util.inspect(values))
+//   try {
+//     const res = await db.query(text, values)
+//     console.log(res.rows[0])
+//   } catch (err) {
+//     console.log(err.stack)
+//   }
+// })
 
 
 //| POST | v.02 post new ticket
@@ -101,3 +141,29 @@ export default router
 //   .catch(err => console.error('error executing query', err.stack))
 //   // res.json(rows)
 // });
+
+
+
+//| POST | v.01 post new ticket
+//|------------------------------------------------------------------------
+// router.post('/ticket', async (req, res) => {
+//   console.log(util.inspect(queryString.parse(req.params.search)))
+//   const { 
+//     ticket_name,
+//     ticket_type,
+//     ticket_description,
+//     ticket_project,
+//     assigned_developer,
+//     ticket_priority,
+//     ticket_status
+//   } = queryString.parse(req.params.search)
+//   // const { rows } = await db.query(`INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`
+//   const { rows } = await db.query(`INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES(${ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status}) RETURNING *`)
+//   .then(res => res.json(rows))
+//   .catch(err => console.error('error executing query', err.stack))
+//   // res.json(rows)
+// });
+
+
+
+export default router

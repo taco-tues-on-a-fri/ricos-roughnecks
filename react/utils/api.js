@@ -17,21 +17,63 @@ export function fetchQuery (query) {
 
 
 
-//| v.06 01-08-20 | 
+//| v.08 01-08-20 | Building off of v.06 - First version known to work
+//| v.08 01-08-20 | Works!
 //|------------------------------------------------------------------------
 export function insertQuery (values) {
-console.log('line23')
-console.log(util.inspect(JSON.stringify(values)))
-  fetch('http://localhost:9000/api/ticket/', {
+  // let stringified = queryString.stringify(values)
+  const endpoint = window.encodeURI(`http://localhost:9000/api/ticket`)
+  fetch(endpoint, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
+    // 'Content-Type':'application/x-www-form-urlencoded' 
   },
   body: JSON.stringify(values)
   })
     .then(res=>res.json())
     .then(res => console.log(res));
 }
+
+
+
+//| v.07 01-08-20 | only shows up as GET
+//|------------------------------------------------------------------------
+// export function insertQuery (values) {
+//     let stringified = queryString.stringify(values)
+//     console.log(util.inspect(stringified))
+//     const endpoint = window.encodeURI(`http://localhost:9000/api/ticket/?${stringified}`)
+//     return fetch(endpoint, {
+//       method: 'POST',
+//       headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+//   //     // body: `?ticket_name=${values.ticket_name}&ticket_type=${values.ticket_type}&ticket_description=${values.ticket_description}&ticket_project=${values.ticket_project}&assigned_developer=${values.assigned_developer}&ticket_priority=${values.ticket_priority}&ticket_status=${values.ticket_status}`,
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         if (!data[0]) {
+//           throw new Error(data.message)
+//         }
+  
+//         return data
+//       })
+//   }
+
+
+//| v.06 01-08-20 | First version known to work
+//|------------------------------------------------------------------------
+// export function insertQuery (values) {
+// console.log('line23')
+// console.log(util.inspect(JSON.stringify(values)))
+//   fetch('http://localhost:9000/api/ticket/', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify(values)
+//   })
+//     .then(res=>res.json())
+//     .then(res => console.log(res));
+// }
 
 
 
@@ -43,6 +85,7 @@ console.log(util.inspect(JSON.stringify(values)))
 //| Historical Attempts
 //|------------------------------------------------------------------------
 //| v.01 01-06-20
+//| v.01 01-08-20 works | url shows up as expected
 //|------------------------------------------------------------------------
 // export function insertQuery (values) {
 //   // const endpoint = window.encodeURI(`http://localhost:9000/api/ticket/${query}`)
@@ -128,6 +171,7 @@ console.log(util.inspect(JSON.stringify(values)))
 //|------------------------------------------------------------------------
 //| v.05 01-06-20 | 
 //| v.05 01-06-20 | https://stackoverflow.com/questions/29775797/fetch-post-json-data/42493030#42493030
+//| v.05 01-08-20 | works - but gives a strange error in browser console. request body has expected data.
 //|------------------------------------------------------------------------
 // export function insertQuery (values) {
 //   fetch('http://localhost:9000/api/ticket/', {
