@@ -32,13 +32,12 @@ router.get('/:id', async (req, res) => {
   res.json(rows)
 });
 
-//| 01-08-20: v.06 
-//| 01-08-20: Works!
+
+//| POST | v.06 create new ticket
 //|------------------------------------------------------------------------
 router.post('/ticket', async (req, res) => {
   console.log('req.body:')
   console.log(util.inspect(req.body))
-  // const values = Object.values(queryString.parse(req.body))
   const values = Object.values(req.body)
   console.log('values:')
   console.log(util.inspect(values))
@@ -50,6 +49,31 @@ router.post('/ticket', async (req, res) => {
     console.log(err.stack)
   }
 });
+
+
+
+
+
+
+
+//| 01-08-20: v.06 
+//| 01-08-20: Works!
+//|------------------------------------------------------------------------
+// router.post('/ticket', async (req, res) => {
+//   console.log('req.body:')
+//   console.log(util.inspect(req.body))
+//   // const values = Object.values(queryString.parse(req.body))
+//   const values = Object.values(req.body)
+//   console.log('values:')
+//   console.log(util.inspect(values))
+//   const text = 'INSERT INTO ticket(ticket_name, ticket_type, ticket_description, ticket_project, assigned_developer, ticket_priority, ticket_status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
+//   try {
+//     const res = await db.query(text, values)
+//     console.log(res.rows[0])
+//   } catch (err) {
+//     console.log(err.stack)
+//   }
+// });
 
 
 //| 01-08-20: v.05 building off of v.02
