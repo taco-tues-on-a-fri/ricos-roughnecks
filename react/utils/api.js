@@ -16,67 +16,18 @@ export function fetchQuery (query) {
 }
 
 
-
-//| v.08 01-08-20 | Building off of v.06 - First version known to work
-//| v.08 01-08-20 | Works!
-//|------------------------------------------------------------------------
 export function insertQuery (values) {
-  // let stringified = queryString.stringify(values)
   const endpoint = window.encodeURI(`http://localhost:9000/api/ticket`)
   fetch(endpoint, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-    // 'Content-Type':'application/x-www-form-urlencoded' 
-  },
-  body: JSON.stringify(values)
-  })
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(values)
+    })
     .then(res=>res.json())
     .then(res => console.log(res));
 }
-
-
-
-//| v.07 01-08-20 | only shows up as GET
-//|------------------------------------------------------------------------
-// export function insertQuery (values) {
-//     let stringified = queryString.stringify(values)
-//     console.log(util.inspect(stringified))
-//     const endpoint = window.encodeURI(`http://localhost:9000/api/ticket/?${stringified}`)
-//     return fetch(endpoint, {
-//       method: 'POST',
-//       headers: { 'Content-Type':'application/x-www-form-urlencoded' },
-//   //     // body: `?ticket_name=${values.ticket_name}&ticket_type=${values.ticket_type}&ticket_description=${values.ticket_description}&ticket_project=${values.ticket_project}&assigned_developer=${values.assigned_developer}&ticket_priority=${values.ticket_priority}&ticket_status=${values.ticket_status}`,
-//     })
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (!data[0]) {
-//           throw new Error(data.message)
-//         }
-  
-//         return data
-//       })
-//   }
-
-
-//| v.06 01-08-20 | First version known to work
-//|------------------------------------------------------------------------
-// export function insertQuery (values) {
-// console.log('line23')
-// console.log(util.inspect(JSON.stringify(values)))
-//   fetch('http://localhost:9000/api/ticket/', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify(values)
-//   })
-//     .then(res=>res.json())
-//     .then(res => console.log(res));
-// }
-
-
-
 
 
 
@@ -197,4 +148,60 @@ export function insertQuery (values) {
 // }).then(res=>res.json())
 //   .then(res => console.log(res));
 //|------------------------------------------------------------------------
+//|------------------------------------------------------------------------
+//|------------------------------------------------------------------------
+//| v.06 01-08-20 | First version known to work
+//|------------------------------------------------------------------------
+// export function insertQuery (values) {
+// console.log('line23')
+// console.log(util.inspect(JSON.stringify(values)))
+//   fetch('http://localhost:9000/api/ticket/', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify(values)
+//   })
+//     .then(res=>res.json())
+//     .then(res => console.log(res));
+// }
+//|------------------------------------------------------------------------
+//| v.07 01-08-20 | only shows up as GET
+//|------------------------------------------------------------------------
+// export function insertQuery (values) {
+//     let stringified = queryString.stringify(values)
+//     console.log(util.inspect(stringified))
+//     const endpoint = window.encodeURI(`http://localhost:9000/api/ticket/?${stringified}`)
+//     return fetch(endpoint, {
+//       method: 'POST',
+//       headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+//   //     // body: `?ticket_name=${values.ticket_name}&ticket_type=${values.ticket_type}&ticket_description=${values.ticket_description}&ticket_project=${values.ticket_project}&assigned_developer=${values.assigned_developer}&ticket_priority=${values.ticket_priority}&ticket_status=${values.ticket_status}`,
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         if (!data[0]) {
+//           throw new Error(data.message)
+//         }
+  
+//         return data
+//       })
+//   }
+//|------------------------------------------------------------------------
+//| v.08 01-08-20 | Building off of v.06 - First version known to work
+//| v.08 01-08-20 | Works!
+//|------------------------------------------------------------------------
+// export function insertQuery (values) {
+//   // let stringified = queryString.stringify(values)
+//   const endpoint = window.encodeURI(`http://localhost:9000/api/ticket`)
+//   fetch(endpoint, {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json'
+//     // 'Content-Type':'application/x-www-form-urlencoded' 
+//   },
+//   body: JSON.stringify(values)
+//   })
+//     .then(res=>res.json())
+//     .then(res => console.log(res));
+// }
 //|------------------------------------------------------------------------
