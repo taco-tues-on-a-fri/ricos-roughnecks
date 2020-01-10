@@ -176,9 +176,27 @@ function formatHeader (string){
   return string.split('_').map(word => word.substring(0,1).toUpperCase()+ word.substring(1)).join(' ')
 }
 
+function createUniqueKey (number, headerColumn){
+  let wordArray = headerColumn.split('_')
+  return `${wordArray[0]}_${number}`
+}
+
 function GetHeaders({ data }) {
   let headerKeys = getKeys({ data })
   return headerKeys.map((headerColumn, index) => {
+    if (headerColumn.includes('_id')){
+      return {
+        Header: formatHeader(headerColumn),
+        accessor: headerColumn,
+        Cell: ({ cell: { value } }) => {
+          return (
+            <>
+              {createUniqueKey(value, headerColumn)}
+            </>
+          )
+        }
+      }
+    }
     // if 'dates' appears in key => format using moment => if date===null return ''
     if (headerColumn.includes('date')) {
       return {
