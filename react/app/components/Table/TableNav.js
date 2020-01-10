@@ -4,6 +4,7 @@ import Loading from '../Utils/Loading'
 import { GetHeader, RenderRow, GetRowsData, GenerateTable } from './GetTableData'
 import util from 'util'
 import BasicTable from './BasicTable';
+import NavigationBar from '../Navs/NavigationBar'
 
 function QueryNav ({ selected, onUpdateQuery }) {
   const tables = ['Person', 'Project', 'Ticket']
@@ -64,6 +65,7 @@ export default function TableNav () {
 
   return (
     <React.Fragment>
+      <NavigationBar />
       <QueryNav
         selected={selectedQuery}
         onUpdateQuery={setSelectedQuery}
