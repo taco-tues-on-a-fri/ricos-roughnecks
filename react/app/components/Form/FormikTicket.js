@@ -82,6 +82,7 @@ const TicketForm = () => {
         ticket_status: "",
       }}
       onSubmit={(values) => handleSubmit(values)}
+      validate={validate}
       // onSubmit={(values, { setSubmitting }) => {
       //   setTimeout(() => {
       //     alert(JSON.stringify(values, null, 2));
