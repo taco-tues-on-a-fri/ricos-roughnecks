@@ -67,7 +67,7 @@ const TicketForm = () => {
   const handleSubmit = values => {
     setFormValues(values)
     insertQuery(values)
-    alert(JSON.stringify(values, null, 2));
+    // alert(JSON.stringify(values, null, 2));
     setToNext(true)
   }
 
