@@ -1,38 +1,45 @@
+//| 01-10-20: TODO: inside table group, remove 'dynamic table'
+//| 01-10-20: TODO: Search box inside of table needs padding to its placeholder text
+//| 01-10-20: TODO: abstract Global filter
+//| 01-10-20: TODO: Can global filter be added into the navigation bar search box?
+//|------------------------------------------------------------------------
 import React from 'react'
 import Table from 'react-bootstrap/Table'
 import { useTable, useFilters, useGlobalFilter } from 'react-table'
 import { fetchQuery } from '../../../utils/api'
+import { getKeys, formatHeader, createUniqueKey } from '../../../utils/formatters'
+import {GlobalFilter} from './GlobalFilter'
 import moment from 'moment'
 import matchSorter from 'match-sorter'
 import util from 'util'
 
 //| Can this be abstracted?
 //|------------------------------------------------------------------------
-function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-  selected,
-}) {
-  const count = preGlobalFilteredRows.length
+// function GlobalFilter({
+//   preGlobalFilteredRows,
+//   globalFilter,
+//   setGlobalFilter,
+//   selected,
+// }) {
+//   const count = preGlobalFilteredRows.length
 
-  return (
-    <span>
-      Search:{' '}
-      <input
-        value={globalFilter || ''}
-        onChange={e => {
-          setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
-        }}
-        placeholder={`${count} ${selected}(s)`}
-        style={{
-          fontSize: '1.1rem',
-          border: '0',
-        }}
-      />
-    </span>
-  )
-}
+//   return (
+//     <span>
+//       Search:{' '}
+//       <input
+//         value={globalFilter || ''}
+//         onChange={e => {
+//           setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
+//         }}
+//         placeholder={` ${count} ${selected}(s)`}
+//         style={{
+//           fontSize: '1.1rem',
+//           border: '0',
+//         }}
+//       />
+//     </span>
+//   )
+// }
 
 //| Can this be abstracted?
 //|------------------------------------------------------------------------
@@ -124,22 +131,10 @@ function CreateTable({ columns, data, selected }) {
   )
 }
 
-function getKeys ({ data }){
-  return Object.keys(data[0]);
-}
-
-function formatHeader (string){
-  return string.split('_').map(word => word.substring(0,1).toUpperCase()+ word.substring(1)).join(' ')
-}
-
-function createUniqueKey (number, headerColumn){
-  let wordArray = headerColumn.split('_')
-  return `${wordArray[0]}_${number}`
-}
-
 function GetHeaders({ data }) {
   let headerKeys = getKeys({ data })
   return headerKeys.map((headerColumn, index) => {
+    // if index = 0 => create unique key by combining table name + id#  
     if (index === 0){
       return {
         Header: formatHeader(headerColumn),
@@ -175,12 +170,11 @@ function GetHeaders({ data }) {
   })
 }
 
-export default function DynamicBasicTable({ data, selected }) {
+export default function DynamicTable({ data, selected }) {
   const columns = React.useMemo(
     () => [
       {
-        //Main group - Dynamic Table
-        Header: "Dynamic Table",
+        Header: `${selected} List`,
         columns: GetHeaders({ data })
       }
     ],
