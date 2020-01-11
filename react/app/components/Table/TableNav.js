@@ -70,7 +70,6 @@ export default function TableNav () {
 
   return (
     <React.Fragment>
-      <NavigationBar />
       <QueryNav
         selected={selectedQuery}
         onUpdateQuery={setSelectedQuery}
