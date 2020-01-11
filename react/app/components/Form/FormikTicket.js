@@ -1,5 +1,6 @@
 //| 01-07-20: Post is now working, and all the table column names are correct
 //| 01-07-20: There is a problem with the construction of the insert query function
+//| 01-10-20: Validation is working after changing to the <Formik> component
 //|------------------------------------------------------------------------
 import React, { useState } from 'react'
 import { Formik, useFormik } from 'formik'
@@ -83,12 +84,6 @@ const TicketForm = () => {
       }}
       onSubmit={(values) => handleSubmit(values)}
       validate={validate}
-      // onSubmit={(values, { setSubmitting }) => {
-      //   setTimeout(() => {
-      //     alert(JSON.stringify(values, null, 2));
-      //     setSubmitting(false);
-      //   }, 400)
-      // }}
     >
       {formik => (
         <Container>
@@ -233,7 +228,7 @@ const TicketForm = () => {
               </Form.Group>
             </Form.Row>
             <Button type="submit">Submit</Button>
-            {toNext ? <Redirect to="/tablenav" /> : null}
+            {toNext ? <Redirect to="/" /> : null}
           </Form>
         </Container>
       )}
