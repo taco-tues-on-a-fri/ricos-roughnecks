@@ -1,6 +1,8 @@
 //| 01-10-20: Completed: inside table group, remove 'dynamic table'
 //| 01-10-20: Completed: Search box inside of table needs padding to its placeholder text
 //| 01-10-20: Completed: abstract Global filter 
+//| 01-10-20: Completed: abstract fuzzyTextFilterFn 
+//| 01-10-20: Completed: abstract getKeys, formatHeader, createUniqueKey
 //|------------------------------------------------------------------------
 //| 01-10-20: TODO: Can global filter be added into the navigation bar search box?
 //|------------------------------------------------------------------------
@@ -9,45 +11,12 @@ import React from 'react'
 import Table from 'react-bootstrap/Table'
 import { useTable, useFilters, useGlobalFilter } from 'react-table'
 import { fetchQuery } from '../../../utils/api'
+import { fuzzyTextFilterFn } from '../../../utils/filters'
 import { getKeys, formatHeader, createUniqueKey } from '../../../utils/formatters'
 import {GlobalFilter} from './GlobalFilter'
 import moment from 'moment'
-import matchSorter from 'match-sorter'
 import util from 'util'
 
-//| Can this be abstracted?
-//|------------------------------------------------------------------------
-// function GlobalFilter({
-//   preGlobalFilteredRows,
-//   globalFilter,
-//   setGlobalFilter,
-//   selected,
-// }) {
-//   const count = preGlobalFilteredRows.length
-
-//   return (
-//     <span>
-//       Search:{' '}
-//       <input
-//         value={globalFilter || ''}
-//         onChange={e => {
-//           setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
-//         }}
-//         placeholder={` ${count} ${selected}(s)`}
-//         style={{
-//           fontSize: '1.1rem',
-//           border: '0',
-//         }}
-//       />
-//     </span>
-//   )
-// }
-
-//| Can this be abstracted?
-//|------------------------------------------------------------------------
-function fuzzyTextFilterFn(rows, id, filterValue) {
-  return matchSorter(rows, filterValue, { keys: [row => row.values[id]] })
-}
 
 // Let the table remove the filter if the string is empty
 fuzzyTextFilterFn.autoRemove = val => !val
