@@ -1,10 +1,15 @@
+//| 01-10-20: TODO: Remove Navbar from this component and into the main page.
+//|------------------------------------------------------------------------
 import React from 'react';
+import NavigationBar from '../Navs/NavigationBar'
+import BugTable from './BugTable';
 import { fetchQuery } from '../../../utils/api'
 import Loading from '../Utils/Loading'
-import { GetHeader, RenderRow, GetRowsData, GenerateTable } from './GetTableData'
 import util from 'util'
-import BasicTable from './BasicTable';
-import NavigationBar from '../Navs/NavigationBar'
+
+//| this could get phased out
+//|------------------------------------------------------------------------
+import { GetHeader, RenderRow, GetRowsData, GenerateTable } from './GetTableData'
 
 function QueryNav ({ selected, onUpdateQuery }) {
   const tables = ['Person', 'Project', 'Ticket']
@@ -71,13 +76,11 @@ export default function TableNav () {
         onUpdateQuery={setSelectedQuery}
       />
 
-      {/* {isLoading() && <p>LOADING</p>} */}
       {isLoading() && <Loading text='Fetching Query' />}
 
       {state.error && <p className='center-text error'>{state.error}</p>}
 
-      {/* {state[selectedQuery] && <GenerateTable query={state[selectedQuery]} />} */}
-      {state[selectedQuery] && <BasicTable data={state[selectedQuery]} selected={selectedQuery} />}
+      {state[selectedQuery] && <BugTable data={state[selectedQuery]} selected={selectedQuery} />}
     </React.Fragment>
   )
 }
