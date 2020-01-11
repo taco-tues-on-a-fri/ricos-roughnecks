@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom'
 
 export default function NavigationBar() {
   return(
-    <Navbar bg="light" expand="lg">
+    <Navbar sticky="top" bg="light" expand="lg">
       <Navbar.Brand href="#home">Bug Tracker</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
