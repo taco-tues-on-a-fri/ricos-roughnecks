@@ -5,6 +5,7 @@ import { useTable, useFilters, useGlobalFilter } from 'react-table'
 import { fetchQuery } from '../../../utils/api'
 import moment from 'moment'
 import matchSorter from 'match-sorter'
+import util from 'util'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -184,7 +185,7 @@ function createUniqueKey (number, headerColumn){
 function GetHeaders({ data }) {
   let headerKeys = getKeys({ data })
   return headerKeys.map((headerColumn, index) => {
-    if (headerColumn.includes('_id')){
+    if (index === 0){
       return {
         Header: formatHeader(headerColumn),
         accessor: headerColumn,
