@@ -4,16 +4,17 @@ require('dotenv').config()
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import TableNav from './components/Table/TableNav'
+// import TableNav from './components/Table/TableNav'
 import BugTable from './components/Table/BugTable'
 import FormikTicket from './components/Form/FormikTicket'
+import Home from './components/Dashboard/Home'
 
 class App extends React.Component {
   render() {
     return (
       <Router>
         <Switch>
-          <Route exact path='/' component={TableNav} />
+          <Route exact path='/' component={Home} />
           <Route path='/create-ticket' component={FormikTicket} />
         </Switch>
       </Router>
