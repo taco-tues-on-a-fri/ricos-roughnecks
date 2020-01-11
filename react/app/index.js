@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-require('dotenv').config()
-// import 'bootswatch/dist/materia/bootstrap.min.css'; 
+require('dotenv').config() 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import TableNav from './components/Table/TableNav'
 import './index.css'
+import BugTable from './components/Table/BugTable'
 import BasicTable from './components/Table/BasicTable'
 import CreateTicket from './components/Form/CreateTicket'
 import BasicForm from './components/Form/BasicForm'
@@ -26,8 +26,9 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path='/' component={FormikTicket} />
-          <Route path='/tablenav' component={TableNav} />
+          <Route exact path='/' component={TableNav} />
+          <Route path='/create-ticket' component={FormikTicket} />
+          {/* <Route path='/tablenav' component={TableNav} /> */}
         </Switch>
       </Router>
       // <TableNav />
