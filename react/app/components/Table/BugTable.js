@@ -1,8 +1,10 @@
-//| 01-10-20: TODO: inside table group, remove 'dynamic table'
-//| 01-10-20: TODO: Search box inside of table needs padding to its placeholder text
-//| 01-10-20: TODO: abstract Global filter
+//| 01-10-20: Completed: inside table group, remove 'dynamic table'
+//| 01-10-20: Completed: Search box inside of table needs padding to its placeholder text
+//| 01-10-20: Completed: abstract Global filter 
+//|------------------------------------------------------------------------
 //| 01-10-20: TODO: Can global filter be added into the navigation bar search box?
 //|------------------------------------------------------------------------
+
 import React from 'react'
 import Table from 'react-bootstrap/Table'
 import { useTable, useFilters, useGlobalFilter } from 'react-table'
