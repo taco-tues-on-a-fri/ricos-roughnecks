@@ -7,12 +7,10 @@ import { fetchQuery } from '../../../utils/api'
 import Loading from '../Utils/Loading'
 import util from 'util'
 
-//| this could get phased out
-//|------------------------------------------------------------------------
-import { GetHeader, RenderRow, GetRowsData, GenerateTable } from './GetTableData'
 
 function QueryNav ({ selected, onUpdateQuery }) {
-  const tables = ['Person', 'Project', 'Ticket']
+  // const tables = ['Person', 'Project', 'Ticket']
+  const tables = ['Users', 'Projects', 'Tickets']
   
   return(
     <ul className='flex-center'>
@@ -48,11 +46,12 @@ function tableNavReducer (state, action) {
 }
 
 export default function TableNav () {
-  const [selectedQuery, setSelectedQuery] = React.useState('Ticket')
+  const [selectedQuery, setSelectedQuery] = React.useState('Tickets')
   const [state, dispatch] = React.useReducer(
     tableNavReducer,
     { error: null }
-  )
+    )
+
 
   const fetchedQueries = React.useRef([])
 
