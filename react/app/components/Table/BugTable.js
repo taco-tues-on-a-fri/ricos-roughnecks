@@ -106,19 +106,19 @@ function GetHeaders({ data }) {
   let headerKeys = getKeys({ data })
   return headerKeys.map((headerColumn, index) => {
     // if index = 0 => create unique key by combining table name + id#  
-    if (index === 0){
-      return {
-        Header: formatHeader(headerColumn),
-        accessor: headerColumn,
-        Cell: ({ cell: { value } }) => {
-          return (
-            <>
-              {createUniqueKey(value, headerColumn)}
-            </>
-          )
-        }
-      }
-    }
+    // if (index === 0){
+    //   return {
+    //     Header: formatHeader(headerColumn),
+    //     accessor: headerColumn,
+    //     Cell: ({ cell: { value } }) => {
+    //       return (
+    //         <>
+    //           {createUniqueKey(value, headerColumn)}
+    //         </>
+    //       )
+    //     }
+    //   }
+    // }
     // if 'dates' appears in key => format using moment => if date===null return ''
     if (headerColumn.includes('date')) {
       return {
@@ -141,18 +141,77 @@ function GetHeaders({ data }) {
   })
 }
 
-export default function DynamicTable({ data, selected }) {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: `${selected} List`,
-        columns: GetHeaders({ data })
-      }
-    ],
-    []
-  )
+//| 01-14-20: v.02
+//|------------------------------------------------------------------------
+function expensive({data, selected}) {
+  const columns = () => [
+    {
+      Header: `${selected} List`,
+      columns: GetHeaders({ data })
+    }
+  ]
+}
 
+export default function DynamicTable({ data, selected }) {
+  const expensiveResult = useMemo(expensive({ data, selected }), [expensive({ data, selected })])
+  
   return (
-      <CreateTable columns={columns} data={data} selected={selected}/>
+    <CreateTable columns={columns} data={data} selected={selected}/>
   )
 }
+
+// export default function DynamicTable({ data, selected }) {
+//   // const columns = React.useEffect(
+//   const columns = React.useMemo(
+//     () => [
+//       {
+//         Header: `${selected} List`,
+//         columns: GetHeaders({ data })
+//       }
+//     ],
+//     []
+//   )
+
+//   return (
+//       <CreateTable columns={columns} data={data} selected={selected}/>
+//   )
+// }
+
+//| 01-14-20: v.01 recreating using useState hook
+//|------------------------------------------------------------------------
+// export default function DynamicTable({ data, selected }) {
+//   const [columns, setColumns] = React.useState('')
+  
+//   React.useEffect(() => {
+
+//   })
+//   const handleColumns = ({ data, selected }) => [
+//       {
+//         Header: `${selected} List`,
+//         columns: GetHeaders({ data })
+//       }
+
+//   return (
+//       <CreateTable columns={columns} data={data} selected={selected}/>
+//   )
+// }
+
+
+//| 01-14-20: v.00
+//|------------------------------------------------------------------------
+// export default function DynamicTable({ data, selected }) {
+//   // const columns = React.useEffect(
+//   const columns = React.useMemo(
+//     () => [
+//       {
+//         Header: `${selected} List`,
+//         columns: GetHeaders({ data })
+//       }
+//     ],
+//     []
+//   )
+
+//   return (
+//       <CreateTable columns={columns} data={data} selected={selected}/>
+//   )
+// }
