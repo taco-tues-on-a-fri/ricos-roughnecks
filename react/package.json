@@ -38,7 +38,7 @@
     "formik": "^2.1.1",
     "jquery": "^3.4.1",
     "match-sorter": "^4.0.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-locales-webpack-plugin": "^1.1.2",
     "pg": "^7.15.0",
     "prop-types": "^15.7.2",
